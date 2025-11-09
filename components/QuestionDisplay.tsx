@@ -59,14 +59,16 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
   }, [currentIndex, questions.length]);
 
   return (
-    <div className="bg-white p-6 md:p-10 rounded-xl shadow-lg flex flex-col items-center border border-gray-200 relative">
-      <button 
-        onClick={onBack}
-        className="absolute top-4 left-4 text-gray-500 hover:text-gray-800 transition-colors"
-        aria-label="Back to deck selection"
-      >
-        &larr; Back to Decks
-      </button>
+    <div className="bg-white p-6 md:p-10 rounded-xl shadow-lg flex flex-col items-center border border-gray-200">
+      <div className="w-full mb-4">
+        <button 
+          onClick={onBack}
+          className="text-gray-500 hover:text-gray-800 transition-colors"
+          aria-label="Back to deck selection"
+        >
+          &larr; Back to Decks
+        </button>
+      </div>
 
       <div className="text-center w-full">
         <p className="text-indigo-600 font-semibold mb-2">{deckTitle}</p>

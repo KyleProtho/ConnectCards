@@ -387,7 +387,6 @@ export const questionDecks: Record<DeckType, string[]> = {
     "What's a small thing that always makes your day better?",
     "If we could take a spontaneous day trip, where would you want to go?",
     "What song feels like 'us' as friends?",
-    "What's your go-to comfort food when you’ve had a bad day?",
     "What's something small you're proud of lately?",
     "What's one thing you think you're better at than most people?",
     "What kind of social setting brings out the best version of you?",
