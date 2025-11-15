@@ -4,8 +4,21 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
+    
+    // Determine base path for GitHub Pages
+    // If GITHUB_REPOSITORY is set (GitHub Actions), extract repo name
+    // Otherwise, use default or fallback to '/'
+    let base = '/';
+    if (process.env.GITHUB_REPOSITORY) {
+      const repoName = process.env.GITHUB_REPOSITORY.split('/')[1];
+      base = `/${repoName}/`;
+    } else if (process.env.GITHUB_PAGES === 'true') {
+      // Fallback if GITHUB_PAGES is set but GITHUB_REPOSITORY is not
+      base = '/QuestionCards/'; // Update this to match your actual repo name if needed
+    }
+    
     return {
-      base: '/ConnectCards/',
+      base,
       server: {
         port: 3000,
         host: '0.0.0.0',
