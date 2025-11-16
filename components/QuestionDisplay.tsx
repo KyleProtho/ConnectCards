@@ -204,8 +204,8 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           </div>
         </div>
 
-        {/* Banner at Top - Left Aligned, positioned closer to question */}
-        <div className="absolute" style={{ top: '20%', left: '24px', transform: 'translateY(-50%)' }}>
+        {/* Banner at Top - Left Aligned, positioned lower */}
+        <div className="absolute" style={{ top: '120px', left: '24px' }}>
           <div 
             className="text-xs md:text-sm font-bold pb-2" 
             style={{ 
@@ -220,8 +220,8 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           </div>
         </div>
 
-        {/* Question Content - Left Aligned, vertically centered */}
-        <div className="relative flex items-center overflow-hidden" style={{ paddingTop: 'calc(20% + 6px)', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
+        {/* Question Content - Left Aligned, top-aligned */}
+        <div className="relative flex items-start overflow-hidden" style={{ paddingTop: '160px', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
           <p 
             key={currentIndex}
             className={`text-2xl md:text-3xl lg:text-4xl font-normal text-left leading-relaxed ${
