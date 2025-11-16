@@ -27,6 +27,13 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
     };
     return colorMap[deck] || '#DC2626';
   };
+
+  // Determine text color based on background color (light or dark)
+  const getTextColor = (bgColor: string): string => {
+    // For light backgrounds, use dark text; for dark backgrounds, use light text
+    const lightColors = ['#EFD0CA']; // Dating
+    return lightColors.includes(bgColor) ? '#000000' : '#FFFFFF';
+  };
   
   const deckOptions = Object.values(DeckType);
 
@@ -38,20 +45,29 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {deckOptions.map((deck) => {
           const deckColor = getDeckColor(deck);
+          const isSelected = selectedDeck === deck;
+          const textColor = isSelected ? getTextColor(deckColor) : undefined;
           return (
             <button
               key={deck}
               onClick={() => setSelectedDeck(deck)}
               className={`p-4 rounded-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-indigo-500 shadow-md hover:shadow-lg
-                ${selectedDeck === deck 
-                  ? 'bg-indigo-600 text-white shadow-lg scale-105 border border-indigo-600' 
+                ${isSelected 
+                  ? 'shadow-lg scale-105' 
                   : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
                 }`}
               style={{
                 borderTopWidth: '6px',
                 borderTopColor: deckColor,
                 borderTopStyle: 'solid',
-                fontVariant: 'small-caps'
+                fontVariant: 'small-caps',
+                ...(isSelected ? {
+                  backgroundColor: deckColor,
+                  color: textColor,
+                  borderColor: deckColor,
+                  borderWidth: '1px',
+                  borderStyle: 'solid'
+                } : {})
               }}
             >
               {deck}
@@ -78,7 +94,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       <button
         onClick={handleStartClick}
         disabled={!selectedDeck}
-        className="w-full md:w-auto px-12 py-3 bg-indigo-600 text-white font-bold rounded-lg shadow-md hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+        className="w-full md:w-auto px-12 py-3 bg-black text-white font-bold rounded-lg shadow-md hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
       >
         Start Conversation
       </button>
