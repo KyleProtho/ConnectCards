@@ -103,7 +103,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
 
         {/* Banner at Top - Left Aligned, positioned at 1/3 from top */}
         <div className="absolute flex items-center" style={{ top: '33%', left: '24px', transform: 'translateY(-50%)' }}>
-          <div className="px-4 py-2 md:px-6 md:py-3 font-bold text-sm md:text-lg" style={{ backgroundColor: bannerColor, color: textColor, fontVariant: 'small-caps', fontFamily: "'Newsreader', serif", fontWeight: 700 }}>
+          <div className="px-4 py-2 md:px-6 md:py-3 font-bold text-sm md:text-lg" style={{ backgroundColor: bannerColor, color: textColor, fontVariant: 'small-caps', fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}>
             {formattedDeckTitle}
           </div>
           {/* Three vertical decorative lines */}
@@ -119,7 +119,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           <p 
             key={currentIndex} 
             className={`text-xl md:text-3xl lg:text-4xl font-bold text-left transition-all duration-200 ease-in-out leading-tight ${isFading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
-            style={{ color: '#000000', fontFamily: "'TikTok Sans', sans-serif" }}
+            style={{ color: '#000000', fontFamily: "'Newsreader', serif", fontWeight: 700 }}
           >
             {questions[currentIndex]}
           </p>
@@ -131,7 +131,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
             onClick={handlePrevious}
             disabled={currentIndex === 0}
             className="flex items-center gap-2 px-4 py-2 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
-            style={{ backgroundColor: bannerColor, fontFamily: "'Newsreader', serif", fontWeight: 700 }}
+            style={{ backgroundColor: bannerColor, fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}
             onMouseEnter={(e) => {
               if (!e.currentTarget.disabled) {
                 const hex = bannerColor.replace('#', '');
@@ -154,7 +154,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
             onClick={handleNext}
             disabled={currentIndex === questions.length - 1}
             className="flex items-center gap-2 px-4 py-2 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
-            style={{ backgroundColor: bannerColor, fontFamily: "'Newsreader', serif", fontWeight: 700 }}
+            style={{ backgroundColor: bannerColor, fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}
             onMouseEnter={(e) => {
               if (!e.currentTarget.disabled) {
                 const hex = bannerColor.replace('#', '');

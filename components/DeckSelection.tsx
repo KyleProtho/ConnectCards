@@ -39,7 +39,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
 
   return (
     <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border border-gray-200">
-      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2" style={{ fontFamily: "'Newsreader', serif", fontWeight: 700 }}>Connect Cards</h1>
+      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2" style={{ fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}>Connect Cards</h1>
       <p className="text-gray-600 mb-8">Select a deck and see where the conversation goes.</p>
       
       {/* Step 1: Choose your deck */}
@@ -47,7 +47,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         <div className="flex items-center justify-center mb-4">
           <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Step 1</span>
         </div>
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Choose your deck</h2>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4" style={{ fontFamily: "'TikTok Sans', sans-serif" }}>Choose your deck</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {deckOptions.map((deck) => {
             const deckColor = getDeckColor(deck);
@@ -67,7 +67,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
                   borderTopColor: deckColor,
                   borderTopStyle: 'solid',
                   fontVariant: 'small-caps',
-                  fontFamily: "'Newsreader', serif",
+                  fontFamily: "'TikTok Sans', sans-serif",
                   fontWeight: 700,
                   ...(isSelected ? {
                     backgroundColor: deckColor,
@@ -97,7 +97,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         <div className="flex items-center justify-center mb-4">
           <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Step 2</span>
         </div>
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Choose number of questions</h2>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4" style={{ fontFamily: "'TikTok Sans', sans-serif" }}>Choose number of questions</h2>
         <div className="flex justify-center gap-3">
           {[4, 8, 12, 16].map((count) => {
             const isSelected = questionCount === count;
@@ -110,7 +110,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
                     ? 'bg-black text-white shadow-lg scale-105' 
                     : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
                   }`}
-                style={{ fontFamily: "'Newsreader', serif", fontWeight: 700 }}
+                style={{ fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}
               >
                 {count}
               </button>
@@ -131,12 +131,12 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         <div className="flex items-center justify-center mb-4">
           <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Step 3</span>
         </div>
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Start</h2>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4" style={{ fontFamily: "'TikTok Sans', sans-serif" }}>Start</h2>
         <button
           onClick={handleStartClick}
           disabled={!selectedDeck}
           className="w-full md:w-auto px-12 py-3 bg-black text-white font-bold rounded-lg shadow-md hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-          style={{ fontFamily: "'Newsreader', serif", fontWeight: 700 }}
+          style={{ fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}
         >
           Start Conversation
         </button>
