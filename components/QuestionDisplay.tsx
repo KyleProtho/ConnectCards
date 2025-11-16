@@ -126,24 +126,24 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           Back to Decks
         </button>
 
-        {/* Banner at Top - Left Aligned, positioned at 1/3 from top */}
-        <div className="absolute flex items-center" style={{ top: '33%', left: '24px', transform: 'translateY(-50%)' }}>
-          <div className="px-4 py-2 md:px-6 md:py-3 font-bold text-sm md:text-lg" style={{ backgroundColor: bannerColor, color: textColor, fontVariant: 'small-caps', fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}>
+        {/* Banner at Top - Left Aligned, positioned closer to question */}
+        <div className="absolute flex items-center" style={{ top: '40%', left: '24px', transform: 'translateY(-50%)' }}>
+          <div className="px-2 py-1 md:px-3 md:py-1.5 font-bold text-xs md:text-sm" style={{ backgroundColor: bannerColor, color: textColor, fontVariant: 'small-caps', fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}>
             {formattedDeckTitle}
           </div>
           {/* Three vertical decorative lines */}
-          <div className="flex gap-1 ml-2">
-            <div className="w-0.5 h-8 md:h-10" style={{ backgroundColor: bannerColor }}></div>
-            <div className="w-0.5 h-8 md:h-10" style={{ backgroundColor: bannerColor }}></div>
-            <div className="w-0.5 h-8 md:h-10" style={{ backgroundColor: bannerColor }}></div>
+          <div className="flex gap-0.5 ml-1.5">
+            <div className="w-0.5 h-5 md:h-6" style={{ backgroundColor: bannerColor }}></div>
+            <div className="w-0.5 h-5 md:h-6" style={{ backgroundColor: bannerColor }}></div>
+            <div className="w-0.5 h-5 md:h-6" style={{ backgroundColor: bannerColor }}></div>
           </div>
         </div>
 
-        {/* Question Content - Left Aligned, close to banner */}
-        <div className="relative flex items-center overflow-hidden" style={{ paddingTop: 'calc(33% + 20px)', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
+        {/* Question Content - Left Aligned, vertically centered */}
+        <div className="relative flex items-center overflow-hidden" style={{ paddingTop: 'calc(40% + 12px)', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
           <p 
             key={currentIndex}
-            className={`text-xl md:text-3xl lg:text-4xl font-bold text-left leading-tight ${
+            className={`text-2xl md:text-3xl lg:text-4xl font-bold text-left leading-relaxed ${
               animatingOut 
                 ? direction === 'next' 
                   ? 'animate-slide-out-left' 
