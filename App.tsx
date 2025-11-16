@@ -30,7 +30,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 flex items-center justify-center p-4">
+    <div className={`min-h-screen text-gray-900 flex items-center justify-center p-4 ${generatedQuestions.length > 0 ? 'bg-gray-100' : 'bg-white'}`}>
       <div className="w-full max-w-2xl mx-auto">
         {generatedQuestions.length > 0 ? (
           <QuestionDisplay 
