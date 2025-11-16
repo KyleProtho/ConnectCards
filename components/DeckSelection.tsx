@@ -38,7 +38,20 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
   const deckOptions = Object.values(DeckType);
 
   return (
-    <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border border-gray-200">
+    <div 
+      className="bg-white p-6 md:p-8 rounded-xl text-center border border-gray-200"
+      style={{
+        boxShadow: `
+          0 1px 0 rgba(0, 0, 0, 0.05),
+          0 2px 0 rgba(0, 0, 0, 0.04),
+          0 3px 0 rgba(0, 0, 0, 0.03),
+          0 4px 0 rgba(0, 0, 0, 0.02),
+          0 5px 0 rgba(0, 0, 0, 0.01),
+          0 6px 8px rgba(0, 0, 0, 0.08),
+          0 8px 12px rgba(0, 0, 0, 0.06)
+        `
+      }}
+    >
       <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2" style={{ fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}>Connect Cards</h1>
       <p className="text-gray-600 mb-8">Select a deck and see where the conversation goes.</p>
       

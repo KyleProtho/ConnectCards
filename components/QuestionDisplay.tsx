@@ -91,7 +91,24 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
   return (
     <div className="relative w-full max-w-2xl mx-auto">
       {/* Card Container */}
-      <div className="bg-white rounded-lg shadow-2xl overflow-hidden relative" style={{ minHeight: '500px', borderColor: bannerColor, borderWidth: '2px', borderStyle: 'solid' }}>
+      <div 
+        className="bg-white rounded-lg overflow-hidden relative" 
+        style={{ 
+          minHeight: '500px', 
+          borderColor: bannerColor, 
+          borderWidth: '2px', 
+          borderStyle: 'solid',
+          boxShadow: `
+            0 1px 0 rgba(0, 0, 0, 0.05),
+            0 2px 0 rgba(0, 0, 0, 0.04),
+            0 3px 0 rgba(0, 0, 0, 0.03),
+            0 4px 0 rgba(0, 0, 0, 0.02),
+            0 5px 0 rgba(0, 0, 0, 0.01),
+            0 6px 8px rgba(0, 0, 0, 0.08),
+            0 8px 12px rgba(0, 0, 0, 0.06)
+          `
+        }}
+      >
         {/* Back to Decks Button - Top Left */}
         <button 
           onClick={onBack}
