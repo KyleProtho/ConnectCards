@@ -161,8 +161,8 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           Back to Decks
         </button>
 
-        {/* Progress Indicator - Top Center */}
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 flex items-center gap-1">
+        {/* Progress Indicator - Between Back button and Deck title */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 z-10 flex items-center gap-1" style={{ top: '60px' }}>
           {questions.map((_, index) => (
             <React.Fragment key={index}>
               <div
