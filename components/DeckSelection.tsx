@@ -42,44 +42,60 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Connect Cards</h1>
       <p className="text-gray-600 mb-8">Select a category to see where the conversation goes.</p>
       
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {deckOptions.map((deck) => {
-          const deckColor = getDeckColor(deck);
-          const isSelected = selectedDeck === deck;
-          const textColor = isSelected ? getTextColor(deckColor) : undefined;
-          return (
-            <button
-              key={deck}
-              onClick={() => setSelectedDeck(deck)}
-              className={`p-4 rounded-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-indigo-500 shadow-md hover:shadow-lg
-                ${isSelected 
-                  ? 'shadow-lg scale-105' 
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
-                }`}
-              style={{
-                borderTopWidth: '6px',
-                borderTopColor: deckColor,
-                borderTopStyle: 'solid',
-                fontVariant: 'small-caps',
-                ...(isSelected ? {
-                  backgroundColor: deckColor,
-                  color: textColor,
-                  borderColor: deckColor,
-                  borderWidth: '1px',
-                  borderStyle: 'solid'
-                } : {})
-              }}
-            >
-              {deck}
-            </button>
-          );
-        })}
+      {/* Step 1: Choose your deck */}
+      <div className="mb-8">
+        <div className="flex items-center justify-center mb-4">
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Step 1</span>
+        </div>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">Choose your deck</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {deckOptions.map((deck) => {
+            const deckColor = getDeckColor(deck);
+            const isSelected = selectedDeck === deck;
+            const textColor = isSelected ? getTextColor(deckColor) : undefined;
+            return (
+              <button
+                key={deck}
+                onClick={() => setSelectedDeck(deck)}
+                className={`p-4 rounded-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-indigo-500 shadow-md hover:shadow-lg
+                  ${isSelected 
+                    ? 'shadow-lg scale-105' 
+                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+                  }`}
+                style={{
+                  borderTopWidth: '6px',
+                  borderTopColor: deckColor,
+                  borderTopStyle: 'solid',
+                  fontVariant: 'small-caps',
+                  ...(isSelected ? {
+                    backgroundColor: deckColor,
+                    color: textColor,
+                    borderLeft: 'none',
+                    borderRight: 'none',
+                    borderBottom: 'none'
+                  } : {})
+                }}
+              >
+                {deck}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
+      {/* Divider */}
+      <div className="flex items-center justify-center mb-8">
+        <div className="flex-1 border-t border-gray-200"></div>
+        <div className="mx-4 w-2 h-2 rounded-full bg-gray-300"></div>
+        <div className="flex-1 border-t border-gray-200"></div>
+      </div>
+
+      {/* Step 2: Choose number of questions */}
       <div className="mb-8">
-        <label className="block text-sm font-medium text-gray-700 mb-3">
-          Number of Questions
-        </label>
+        <div className="flex items-center justify-center mb-4">
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Step 2</span>
+        </div>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">Choose number of questions</h2>
         <div className="flex justify-center gap-3">
           {[4, 8, 12, 16].map((count) => {
             const isSelected = questionCount === count;
@@ -100,13 +116,27 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         </div>
       </div>
 
-      <button
-        onClick={handleStartClick}
-        disabled={!selectedDeck}
-        className="w-full md:w-auto px-12 py-3 bg-black text-white font-bold rounded-lg shadow-md hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-      >
-        Start Conversation
-      </button>
+      {/* Divider */}
+      <div className="flex items-center justify-center mb-8">
+        <div className="flex-1 border-t border-gray-200"></div>
+        <div className="mx-4 w-2 h-2 rounded-full bg-gray-300"></div>
+        <div className="flex-1 border-t border-gray-200"></div>
+      </div>
+
+      {/* Step 3: Start */}
+      <div>
+        <div className="flex items-center justify-center mb-4">
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Step 3</span>
+        </div>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">Start</h2>
+        <button
+          onClick={handleStartClick}
+          disabled={!selectedDeck}
+          className="w-full md:w-auto px-12 py-3 bg-black text-white font-bold rounded-lg shadow-md hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+        >
+          Start Conversation
+        </button>
+      </div>
     </div>
   );
 };
