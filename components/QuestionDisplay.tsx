@@ -94,7 +94,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
   const textColor = getTextColor(bannerColor);
 
   // Format deck title (replace underscores with spaces)
-  const formattedDeckTitle = deckTitle.replace(/_/g, ' ');
+  const formattedDeckTitle = deckTitle.replaceAll('_', ' ');
 
   return (
     <div className="relative w-full max-w-2xl mx-auto">
