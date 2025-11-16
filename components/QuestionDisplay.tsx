@@ -70,6 +70,38 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, questions.length]);
 
+  // Swipe detection
+  const minSwipeDistance = 50;
+  const touchStartRef = React.useRef<number | null>(null);
+  const touchEndRef = React.useRef<number | null>(null);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchEndRef.current = null;
+    touchStartRef.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEndRef.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStartRef.current || !touchEndRef.current) return;
+    
+    const distance = touchStartRef.current - touchEndRef.current;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      handleNext();
+    } else if (isRightSwipe) {
+      handlePrevious();
+    }
+    
+    // Reset
+    touchStartRef.current = null;
+    touchEndRef.current = null;
+  };
+
   // Deck color mapping
   const getDeckColor = (deck: string): string => {
     const colorMap: Record<string, string> = {
@@ -116,6 +148,9 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
             0 8px 12px rgba(0, 0, 0, 0.06)
           `
         }}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
       >
         {/* Back to Decks Button - Top Left */}
         <button 
@@ -127,7 +162,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
         </button>
 
         {/* Banner at Top - Left Aligned, positioned closer to question */}
-        <div className="absolute flex items-center" style={{ top: '40%', left: '24px', transform: 'translateY(-50%)' }}>
+        <div className="absolute flex items-center" style={{ top: '20%', left: '24px', transform: 'translateY(-50%)' }}>
           <div className="px-2 py-1 md:px-3 md:py-1.5 font-bold text-xs md:text-sm" style={{ backgroundColor: bannerColor, color: textColor, fontVariant: 'small-caps', fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}>
             {formattedDeckTitle}
           </div>
@@ -140,7 +175,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
         </div>
 
         {/* Question Content - Left Aligned, vertically centered */}
-        <div className="relative flex items-center overflow-hidden" style={{ paddingTop: 'calc(40% + 12px)', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
+        <div className="relative flex items-center overflow-hidden" style={{ paddingTop: 'calc(20% + 6px)', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
           <p 
             key={currentIndex}
             className={`text-2xl md:text-3xl lg:text-4xl font-bold text-left leading-relaxed ${
@@ -218,35 +253,42 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           `}</style>
         </div>
 
-        {/* Navigation Buttons - Bottom Right */}
-        <div className="absolute bottom-4 right-4 flex items-center gap-3">
+        {/* Navigation Buttons */}
+        {/* Previous Button - Bottom Left */}
+        <div className="absolute bottom-4 left-4">
           <button
             onClick={handlePrevious}
             disabled={currentIndex === 0}
-            className="flex items-center gap-2 px-4 py-2 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
-            style={{ backgroundColor: bannerColor, fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}
+            className="flex items-center gap-2 px-6 py-3 font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors border-2 min-h-[48px]"
+            style={{ 
+              backgroundColor: 'transparent', 
+              borderColor: bannerColor, 
+              color: bannerColor,
+              fontFamily: "'TikTok Sans', sans-serif", 
+              fontWeight: 700 
+            }}
             onMouseEnter={(e) => {
               if (!e.currentTarget.disabled) {
-                const hex = bannerColor.replace('#', '');
-                const r = parseInt(hex.substring(0, 2), 16);
-                const g = parseInt(hex.substring(2, 4), 16);
-                const b = parseInt(hex.substring(4, 6), 16);
-                const darker = `rgb(${Math.max(0, r - 30)}, ${Math.max(0, g - 30)}, ${Math.max(0, b - 30)})`;
-                e.currentTarget.style.backgroundColor = darker;
+                e.currentTarget.style.backgroundColor = bannerColor;
+                e.currentTarget.style.color = textColor;
               }
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = bannerColor;
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.color = bannerColor;
             }}
             aria-label="Previous question"
           >
-            <ArrowLeftIcon className="h-5 w-5" />
+            <ArrowLeftIcon className="h-6 w-6" />
             Previous
           </button>
+        </div>
+        {/* Next Button - Bottom Right */}
+        <div className="absolute bottom-4 right-4">
           <button
             onClick={handleNext}
             disabled={currentIndex === questions.length - 1}
-            className="flex items-center gap-2 px-4 py-2 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
+            className="flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md min-h-[48px]"
             style={{ backgroundColor: bannerColor, fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}
             onMouseEnter={(e) => {
               if (!e.currentTarget.disabled) {
@@ -264,7 +306,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
             aria-label="Next question"
           >
             Next
-            <ArrowRightIcon className="h-5 w-5" />
+            <ArrowRightIcon className="h-6 w-6" />
           </button>
         </div>
       </div>
