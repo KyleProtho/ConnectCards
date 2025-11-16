@@ -162,35 +162,46 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
         </button>
 
         {/* Progress Indicator - Between Back button and Deck title */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 z-10 flex items-center gap-1" style={{ top: '60px' }}>
-          {questions.map((_, index) => (
-            <React.Fragment key={index}>
-              <div
-                className="relative flex items-center justify-center"
-                style={{ width: '24px', height: '24px' }}
-              >
+        <div 
+          className="absolute left-1/2 transform -translate-x-1/2 z-10 flex items-center justify-center"
+          style={{ 
+            top: '60px',
+            maxWidth: 'calc(100% - 48px)',
+            paddingLeft: '12px',
+            paddingRight: '12px',
+            overflow: 'hidden'
+          }}
+        >
+          <div className="flex items-center gap-0.5 md:gap-1 flex-nowrap">
+            {questions.map((_, index) => (
+              <React.Fragment key={index}>
                 <div
-                  className="rounded-full transition-all duration-300"
-                  style={{
-                    width: index === currentIndex ? '12px' : '8px',
-                    height: index === currentIndex ? '12px' : '8px',
-                    backgroundColor: index <= currentIndex ? bannerColor : '#E5E7EB',
-                    border: index === currentIndex ? `2px solid ${bannerColor}` : 'none',
-                    boxShadow: index === currentIndex ? `0 0 0 2px rgba(255, 255, 255, 0.8)` : 'none',
-                  }}
-                />
-              </div>
-              {index < questions.length - 1 && (
-                <div
-                  className="h-0.5 transition-all duration-300"
-                  style={{
-                    width: '16px',
-                    backgroundColor: index < currentIndex ? bannerColor : '#E5E7EB',
-                  }}
-                />
-              )}
-            </React.Fragment>
-          ))}
+                  className="relative flex items-center justify-center flex-shrink-0"
+                  style={{ width: '16px', height: '16px' }}
+                >
+                  <div
+                    className="rounded-full transition-all duration-300"
+                    style={{
+                      width: index === currentIndex ? '10px' : '6px',
+                      height: index === currentIndex ? '10px' : '6px',
+                      backgroundColor: index <= currentIndex ? bannerColor : '#E5E7EB',
+                      border: index === currentIndex ? `2px solid ${bannerColor}` : 'none',
+                      boxShadow: index === currentIndex ? `0 0 0 2px rgba(255, 255, 255, 0.8)` : 'none',
+                    }}
+                  />
+                </div>
+                {index < questions.length - 1 && (
+                  <div
+                    className="h-0.5 transition-all duration-300 flex-shrink-0"
+                    style={{
+                      width: '8px',
+                      backgroundColor: index < currentIndex ? bannerColor : '#E5E7EB',
+                    }}
+                  />
+                )}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
 
         {/* Banner at Top - Left Aligned, positioned closer to question */}
