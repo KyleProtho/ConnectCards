@@ -57,7 +57,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
               <button
                 key={deck}
                 onClick={() => setSelectedDeck(deck)}
-                className={`p-4 rounded-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-indigo-500 shadow-md hover:shadow-lg
+                className={`p-4 rounded-lg font-semibold transition-all duration-200 focus:outline-none shadow-md hover:shadow-lg
                   ${isSelected 
                     ? 'shadow-lg scale-105' 
                     : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
