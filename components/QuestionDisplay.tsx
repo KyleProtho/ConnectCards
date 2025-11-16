@@ -73,8 +73,17 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
     <div className="relative w-full max-w-2xl mx-auto">
       {/* Card Container */}
       <div className="bg-white rounded-lg shadow-2xl overflow-hidden relative" style={{ minHeight: '500px', borderColor: bannerColor, borderWidth: '2px', borderStyle: 'solid' }}>
-        {/* Banner at Top - Left Aligned */}
-        <div className="pt-6 md:pt-8 flex items-center" style={{ paddingLeft: '24px' }}>
+        {/* Back to Decks Button - Top Left */}
+        <button 
+          onClick={onBack}
+          className="absolute top-2 left-4 font-normal text-xs uppercase text-gray-500 z-10 bg-white px-3 py-1 rounded shadow-sm hover:text-gray-700 transition-colors"
+          aria-label="Back to deck selection"
+        >
+          Back to Decks
+        </button>
+
+        {/* Banner at Top - Left Aligned, positioned at 1/3 from top */}
+        <div className="absolute flex items-center" style={{ top: '33%', left: '24px', transform: 'translateY(-50%)' }}>
           <div className="px-4 py-2 md:px-6 md:py-3 font-bold text-sm md:text-lg" style={{ backgroundColor: bannerColor, color: textColor }}>
             {formattedDeckTitle}
           </div>
@@ -86,17 +95,8 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           </div>
         </div>
 
-        {/* Back to Decks Button - Top Left */}
-        <button 
-          onClick={onBack}
-          className="absolute top-4 left-4 font-normal text-xs uppercase text-gray-500 z-10 bg-white px-3 py-1 rounded shadow-sm hover:text-gray-700 transition-colors"
-          aria-label="Back to deck selection"
-        >
-          Back to Decks
-        </button>
-
-        {/* Question Content - Left Aligned */}
-        <div className="relative flex items-center py-12 md:py-16" style={{ minHeight: '400px', paddingLeft: '24px', paddingRight: '24px' }}>
+        {/* Question Content - Left Aligned, close to banner */}
+        <div className="relative flex items-center" style={{ paddingTop: 'calc(33% + 20px)', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
           <p 
             key={currentIndex} 
             className={`text-xl md:text-3xl lg:text-4xl font-bold text-left transition-all duration-200 ease-in-out leading-tight ${isFading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
