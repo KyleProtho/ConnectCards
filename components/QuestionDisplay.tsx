@@ -94,7 +94,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
   const textColor = getTextColor(bannerColor);
 
   // Format deck title (replace underscores with spaces)
-  const formattedDeckTitle = deckTitle.replaceAll('_', ' ');
+  const formattedDeckTitle = deckTitle.replace(/_/g, ' ');
 
   return (
     <div className="relative w-full max-w-2xl mx-auto">
@@ -126,30 +126,21 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           Back to Decks
         </button>
 
-        {/* Content Area - Banner and Question (positioned at ~1/4 from top) */}
-        <div
-          className="absolute inset-0 flex flex-col justify-start items-start overflow-hidden"
-          style={{
-            paddingLeft: '24px',
-            paddingRight: '24px',
-            paddingBottom: '60px',
-            marginTop: '25%',
-          }}
-        >
-          {/* Banner - positioned above question */}
-          <div className="flex items-center mb-4">
-            <div className="px-2 py-1 md:px-3 md:py-1.5 font-bold text-xs md:text-sm" style={{ backgroundColor: bannerColor, color: textColor, fontVariant: 'small-caps', fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}>
-              {formattedDeckTitle}
-            </div>
-            {/* Three vertical decorative lines */}
-            <div className="flex gap-0.5 ml-1.5">
-              <div className="w-0.5 h-5 md:h-6" style={{ backgroundColor: bannerColor }}></div>
-              <div className="w-0.5 h-5 md:h-6" style={{ backgroundColor: bannerColor }}></div>
-              <div className="w-0.5 h-5 md:h-6" style={{ backgroundColor: bannerColor }}></div>
-            </div>
+        {/* Banner at Top - Left Aligned, positioned closer to question */}
+        <div className="absolute flex items-center" style={{ top: '40%', left: '24px', transform: 'translateY(-50%)' }}>
+          <div className="px-2 py-1 md:px-3 md:py-1.5 font-bold text-xs md:text-sm" style={{ backgroundColor: bannerColor, color: textColor, fontVariant: 'small-caps', fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}>
+            {formattedDeckTitle}
           </div>
+          {/* Three vertical decorative lines */}
+          <div className="flex gap-0.5 ml-1.5">
+            <div className="w-0.5 h-5 md:h-6" style={{ backgroundColor: bannerColor }}></div>
+            <div className="w-0.5 h-5 md:h-6" style={{ backgroundColor: bannerColor }}></div>
+            <div className="w-0.5 h-5 md:h-6" style={{ backgroundColor: bannerColor }}></div>
+          </div>
+        </div>
 
-          {/* Question Content - Left Aligned */}
+        {/* Question Content - Left Aligned, vertically centered */}
+        <div className="relative flex items-center overflow-hidden" style={{ paddingTop: 'calc(40% + 12px)', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
           <p 
             key={currentIndex}
             className={`text-2xl md:text-3xl lg:text-4xl font-bold text-left leading-relaxed ${
@@ -171,7 +162,6 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           >
             {questions[currentIndex]}
           </p>
-        </div>
           <style>{`
             @keyframes slideInFromRight {
               from {
