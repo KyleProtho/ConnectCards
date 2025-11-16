@@ -126,8 +126,16 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           Back to Decks
         </button>
 
-        {/* Centered Content Area - Banner and Question */}
-        <div className="absolute inset-0 flex flex-col justify-center items-start overflow-hidden" style={{ paddingLeft: '24px', paddingRight: '24px', paddingTop: '60px', paddingBottom: '60px' }}>
+        {/* Content Area - Banner and Question (positioned at ~1/4 from top) */}
+        <div
+          className="absolute inset-0 flex flex-col justify-start items-start overflow-hidden"
+          style={{
+            paddingLeft: '24px',
+            paddingRight: '24px',
+            paddingBottom: '60px',
+            marginTop: '25%',
+          }}
+        >
           {/* Banner - positioned above question */}
           <div className="flex items-center mb-4">
             <div className="px-2 py-1 md:px-3 md:py-1.5 font-bold text-xs md:text-sm" style={{ backgroundColor: bannerColor, color: textColor, fontVariant: 'small-caps', fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}>
