@@ -73,39 +73,33 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
     <div className="relative w-full max-w-2xl mx-auto">
       {/* Card Container */}
       <div className="bg-white rounded-lg shadow-2xl overflow-hidden relative" style={{ minHeight: '500px', borderColor: bannerColor, borderWidth: '2px', borderStyle: 'solid' }}>
-        {/* Banner at Top */}
-        <div className="pt-6 md:pt-8 flex justify-center">
-          <div className="px-4 py-2 md:px-6 md:py-3 font-bold text-sm md:text-lg text-center" style={{ backgroundColor: bannerColor, color: textColor, width: '40%' }}>
+        {/* Banner at Top - Left Aligned */}
+        <div className="pt-6 md:pt-8 flex items-center" style={{ paddingLeft: '24px' }}>
+          <div className="px-4 py-2 md:px-6 md:py-3 font-bold text-sm md:text-lg" style={{ backgroundColor: bannerColor, color: textColor }}>
             {formattedDeckTitle}
+          </div>
+          {/* Three vertical decorative lines */}
+          <div className="flex gap-1 ml-2">
+            <div className="w-0.5 h-8 md:h-10" style={{ backgroundColor: bannerColor }}></div>
+            <div className="w-0.5 h-8 md:h-10" style={{ backgroundColor: bannerColor }}></div>
+            <div className="w-0.5 h-8 md:h-10" style={{ backgroundColor: bannerColor }}></div>
           </div>
         </div>
 
         {/* Back to Decks Button - Top Left */}
         <button 
           onClick={onBack}
-          className="absolute top-4 left-4 font-semibold text-sm md:text-base transition-colors z-10 bg-white px-3 py-1 rounded shadow-sm"
-          style={{ color: bannerColor }}
-          onMouseEnter={(e) => {
-            const hex = bannerColor.replace('#', '');
-            const r = parseInt(hex.substring(0, 2), 16);
-            const g = parseInt(hex.substring(2, 4), 16);
-            const b = parseInt(hex.substring(4, 6), 16);
-            const darker = `rgb(${Math.max(0, r - 30)}, ${Math.max(0, g - 30)}, ${Math.max(0, b - 30)})`;
-            e.currentTarget.style.color = darker;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = bannerColor;
-          }}
+          className="absolute top-4 left-4 font-normal text-xs uppercase text-gray-500 z-10 bg-white px-3 py-1 rounded shadow-sm hover:text-gray-700 transition-colors"
           aria-label="Back to deck selection"
         >
           Back to Decks
         </button>
 
-        {/* Question Content */}
-        <div className="relative flex items-center justify-center px-6 md:px-10 py-12 md:py-16" style={{ minHeight: '400px' }}>
+        {/* Question Content - Left Aligned */}
+        <div className="relative flex items-center py-12 md:py-16" style={{ minHeight: '400px', paddingLeft: '24px', paddingRight: '24px' }}>
           <p 
             key={currentIndex} 
-            className={`text-xl md:text-3xl lg:text-4xl font-bold text-center transition-all duration-200 ease-in-out leading-tight ${isFading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
+            className={`text-xl md:text-3xl lg:text-4xl font-bold text-left transition-all duration-200 ease-in-out leading-tight ${isFading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
             style={{ color: '#000000' }}
           >
             {questions[currentIndex]}
