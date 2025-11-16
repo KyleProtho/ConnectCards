@@ -74,14 +74,16 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
       {/* Card Container */}
       <div className="bg-white rounded-lg shadow-2xl overflow-hidden relative" style={{ minHeight: '500px', borderColor: bannerColor, borderWidth: '2px', borderStyle: 'solid' }}>
         {/* Banner at Top */}
-        <div className="px-6 py-3 font-bold text-lg md:text-xl text-center" style={{ backgroundColor: bannerColor, color: textColor }}>
-          {formattedDeckTitle}
+        <div className="pt-6 md:pt-8 flex justify-center">
+          <div className="px-4 py-2 md:px-6 md:py-3 font-bold text-sm md:text-lg text-center" style={{ backgroundColor: bannerColor, color: textColor, width: '40%' }}>
+            {formattedDeckTitle}
+          </div>
         </div>
 
-        {/* Back to Decks Button - Top Right */}
+        {/* Back to Decks Button - Top Left */}
         <button 
           onClick={onBack}
-          className="absolute top-4 right-4 font-semibold text-sm md:text-base transition-colors z-10 bg-white px-3 py-1 rounded shadow-sm"
+          className="absolute top-4 left-4 font-semibold text-sm md:text-base transition-colors z-10 bg-white px-3 py-1 rounded shadow-sm"
           style={{ color: bannerColor }}
           onMouseEnter={(e) => {
             const hex = bannerColor.replace('#', '');
@@ -104,7 +106,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           <p 
             key={currentIndex} 
             className={`text-xl md:text-3xl lg:text-4xl font-bold text-center transition-all duration-200 ease-in-out leading-tight ${isFading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
-            style={{ color: bannerColor }}
+            style={{ color: '#000000' }}
           >
             {questions[currentIndex]}
           </p>
