@@ -12,6 +12,12 @@ const ArrowRightIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
+const ArrowLeftIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+  </svg>
+);
+
 const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle, onBack }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
@@ -26,12 +32,25 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
     }
   };
 
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setIsFading(true);
+      setTimeout(() => {
+        setCurrentIndex(currentIndex - 1);
+        setIsFading(false);
+      }, 200);
+    }
+  };
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'ArrowRight' || event.key === ' ') {
         event.preventDefault();
         handleNext();
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        handlePrevious();
       }
     };
 
@@ -84,7 +103,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
 
         {/* Banner at Top - Left Aligned, positioned at 1/3 from top */}
         <div className="absolute flex items-center" style={{ top: '33%', left: '24px', transform: 'translateY(-50%)' }}>
-          <div className="px-4 py-2 md:px-6 md:py-3 font-bold text-sm md:text-lg" style={{ backgroundColor: bannerColor, color: textColor, fontVariant: 'small-caps' }}>
+          <div className="px-4 py-2 md:px-6 md:py-3 font-bold text-sm md:text-lg" style={{ backgroundColor: bannerColor, color: textColor, fontVariant: 'small-caps', fontFamily: "'Newsreader', serif", fontWeight: 700 }}>
             {formattedDeckTitle}
           </div>
           {/* Three vertical decorative lines */}
@@ -100,19 +119,42 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           <p 
             key={currentIndex} 
             className={`text-xl md:text-3xl lg:text-4xl font-bold text-left transition-all duration-200 ease-in-out leading-tight ${isFading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
-            style={{ color: '#000000' }}
+            style={{ color: '#000000', fontFamily: "'TikTok Sans', sans-serif" }}
           >
             {questions[currentIndex]}
           </p>
         </div>
 
-        {/* Next Button - Bottom Right */}
-        <div className="absolute bottom-4 right-4">
+        {/* Navigation Buttons - Bottom Right */}
+        <div className="absolute bottom-4 right-4 flex items-center gap-3">
+          <button
+            onClick={handlePrevious}
+            disabled={currentIndex === 0}
+            className="flex items-center gap-2 px-4 py-2 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
+            style={{ backgroundColor: bannerColor, fontFamily: "'Newsreader', serif", fontWeight: 700 }}
+            onMouseEnter={(e) => {
+              if (!e.currentTarget.disabled) {
+                const hex = bannerColor.replace('#', '');
+                const r = parseInt(hex.substring(0, 2), 16);
+                const g = parseInt(hex.substring(2, 4), 16);
+                const b = parseInt(hex.substring(4, 6), 16);
+                const darker = `rgb(${Math.max(0, r - 30)}, ${Math.max(0, g - 30)}, ${Math.max(0, b - 30)})`;
+                e.currentTarget.style.backgroundColor = darker;
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = bannerColor;
+            }}
+            aria-label="Previous question"
+          >
+            <ArrowLeftIcon className="h-5 w-5" />
+            Previous
+          </button>
           <button
             onClick={handleNext}
             disabled={currentIndex === questions.length - 1}
             className="flex items-center gap-2 px-4 py-2 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md"
-            style={{ backgroundColor: bannerColor }}
+            style={{ backgroundColor: bannerColor, fontFamily: "'Newsreader', serif", fontWeight: 700 }}
             onMouseEnter={(e) => {
               if (!e.currentTarget.disabled) {
                 const hex = bannerColor.replace('#', '');

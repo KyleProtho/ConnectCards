@@ -39,8 +39,8 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
 
   return (
     <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border border-gray-200">
-      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Connect Cards</h1>
-      <p className="text-gray-600 mb-8">Select a category to see where the conversation goes.</p>
+      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2" style={{ fontFamily: "'Newsreader', serif", fontWeight: 700 }}>Connect Cards</h1>
+      <p className="text-gray-600 mb-8">Select a deck and see where the conversation goes.</p>
       
       {/* Step 1: Choose your deck */}
       <div className="mb-8">
@@ -57,7 +57,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
               <button
                 key={deck}
                 onClick={() => setSelectedDeck(deck)}
-                className={`p-4 rounded-lg font-semibold transition-all duration-200 focus:outline-none shadow-md hover:shadow-lg
+                className={`p-4 rounded-lg font-semibold transition-all duration-200 focus:outline-none shadow-md hover:shadow-lg flex items-center justify-center min-h-[80px] h-full
                   ${isSelected 
                     ? 'shadow-lg scale-105' 
                     : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
@@ -67,6 +67,8 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
                   borderTopColor: deckColor,
                   borderTopStyle: 'solid',
                   fontVariant: 'small-caps',
+                  fontFamily: "'Newsreader', serif",
+                  fontWeight: 700,
                   ...(isSelected ? {
                     backgroundColor: deckColor,
                     color: textColor,
@@ -108,6 +110,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
                     ? 'bg-black text-white shadow-lg scale-105' 
                     : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
                   }`}
+                style={{ fontFamily: "'Newsreader', serif", fontWeight: 700 }}
               >
                 {count}
               </button>
@@ -133,6 +136,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
           onClick={handleStartClick}
           disabled={!selectedDeck}
           className="w-full md:w-auto px-12 py-3 bg-black text-white font-bold rounded-lg shadow-md hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+          style={{ fontFamily: "'Newsreader', serif", fontWeight: 700 }}
         >
           Start Conversation
         </button>
