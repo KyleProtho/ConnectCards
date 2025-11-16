@@ -92,7 +92,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
     <div className="relative w-full max-w-2xl mx-auto">
       {/* Card Container */}
       <div 
-        className="bg-white rounded-lg overflow-hidden relative" 
+        className="bg-white rounded-xl overflow-hidden relative" 
         style={{ 
           minHeight: '500px', 
           borderColor: bannerColor, 
