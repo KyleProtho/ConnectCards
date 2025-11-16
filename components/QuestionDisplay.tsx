@@ -66,8 +66,8 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
 
   const textColor = getTextColor(bannerColor);
 
-  // Format deck title to uppercase
-  const formattedDeckTitle = deckTitle.toUpperCase().replace(/_/g, ' ');
+  // Format deck title (replace underscores with spaces)
+  const formattedDeckTitle = deckTitle.replace(/_/g, ' ');
 
   return (
     <div className="relative w-full max-w-2xl mx-auto">
@@ -84,7 +84,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
 
         {/* Banner at Top - Left Aligned, positioned at 1/3 from top */}
         <div className="absolute flex items-center" style={{ top: '33%', left: '24px', transform: 'translateY(-50%)' }}>
-          <div className="px-4 py-2 md:px-6 md:py-3 font-bold text-sm md:text-lg" style={{ backgroundColor: bannerColor, color: textColor }}>
+          <div className="px-4 py-2 md:px-6 md:py-3 font-bold text-sm md:text-lg" style={{ backgroundColor: bannerColor, color: textColor, fontVariant: 'small-caps' }}>
             {formattedDeckTitle}
           </div>
           {/* Three vertical decorative lines */}

@@ -14,6 +14,19 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       onStart(selectedDeck, Math.max(1, questionCount));
     }
   };
+
+  // Deck color mapping (matches QuestionDisplay)
+  const getDeckColor = (deck: DeckType): string => {
+    const colorMap: Record<string, string> = {
+      'Dating': '#EFD0CA',
+      'Friends': '#5C7457',
+      'Long-Term Relationship': '#A23E48',
+      'Coworkers': '#3D3B30',
+      'Strangers': '#6C8EAD',
+      'Intimacy': '#DC2626', // Default red for Intimacy
+    };
+    return colorMap[deck] || '#DC2626';
+  };
   
   const deckOptions = Object.values(DeckType);
 
@@ -23,19 +36,28 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       <p className="text-gray-600 mb-8">Choose a category to start the conversation.</p>
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {deckOptions.map((deck) => (
-          <button
-            key={deck}
-            onClick={() => setSelectedDeck(deck)}
-            className={`p-4 rounded-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-indigo-500
-              ${selectedDeck === deck 
-                ? 'bg-indigo-600 text-white shadow-lg scale-105 border border-indigo-600' 
-                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
-              }`}
-          >
-            {deck}
-          </button>
-        ))}
+        {deckOptions.map((deck) => {
+          const deckColor = getDeckColor(deck);
+          return (
+            <button
+              key={deck}
+              onClick={() => setSelectedDeck(deck)}
+              className={`p-4 rounded-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-indigo-500 shadow-md hover:shadow-lg
+                ${selectedDeck === deck 
+                  ? 'bg-indigo-600 text-white shadow-lg scale-105 border border-indigo-600' 
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+                }`}
+              style={{
+                borderTopWidth: '6px',
+                borderTopColor: deckColor,
+                borderTopStyle: 'solid',
+                fontVariant: 'small-caps'
+              }}
+            >
+              {deck}
+            </button>
+          );
+        })}
       </div>
 
       <div className="mb-8">
