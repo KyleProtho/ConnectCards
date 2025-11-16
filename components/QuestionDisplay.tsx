@@ -20,25 +20,33 @@ const ArrowLeftIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 
 const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle, onBack }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFading, setIsFading] = useState(false);
+  const [direction, setDirection] = useState<'next' | 'previous'>('next');
+  const [animatingOut, setAnimatingOut] = useState(false);
+  const [shouldSlideIn, setShouldSlideIn] = useState(false);
 
   const handleNext = () => {
-    if (currentIndex < questions.length - 1) {
-      setIsFading(true);
+    if (currentIndex < questions.length - 1 && !animatingOut) {
+      setDirection('next');
+      setAnimatingOut(true);
       setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-        setIsFading(false);
-      }, 200);
+        setAnimatingOut(false);
+        setShouldSlideIn(true);
+        setTimeout(() => setShouldSlideIn(false), 300);
+      }, 300);
     }
   };
 
   const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setIsFading(true);
+    if (currentIndex > 0 && !animatingOut) {
+      setDirection('previous');
+      setAnimatingOut(true);
       setTimeout(() => {
         setCurrentIndex(currentIndex - 1);
-        setIsFading(false);
-      }, 200);
+        setAnimatingOut(false);
+        setShouldSlideIn(true);
+        setTimeout(() => setShouldSlideIn(false), 300);
+      }, 300);
     }
   };
 
@@ -132,14 +140,82 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
         </div>
 
         {/* Question Content - Left Aligned, close to banner */}
-        <div className="relative flex items-center" style={{ paddingTop: 'calc(33% + 20px)', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
+        <div className="relative flex items-center overflow-hidden" style={{ paddingTop: 'calc(33% + 20px)', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
           <p 
-            key={currentIndex} 
-            className={`text-xl md:text-3xl lg:text-4xl font-bold text-left transition-all duration-200 ease-in-out leading-tight ${isFading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
-            style={{ color: '#000000', fontFamily: "'Newsreader', serif", fontWeight: 700 }}
+            key={currentIndex}
+            className={`text-xl md:text-3xl lg:text-4xl font-bold text-left leading-tight ${
+              animatingOut 
+                ? direction === 'next' 
+                  ? 'animate-slide-out-left' 
+                  : 'animate-slide-out-right'
+                : shouldSlideIn
+                  ? direction === 'next'
+                    ? 'animate-slide-in-right'
+                    : 'animate-slide-in-left'
+                  : ''
+            }`}
+            style={{ 
+              color: '#000000', 
+              fontFamily: "'Newsreader', serif", 
+              fontWeight: 700
+            }}
           >
             {questions[currentIndex]}
           </p>
+          <style>{`
+            @keyframes slideInFromRight {
+              from {
+                opacity: 0;
+                transform: translateX(2rem);
+              }
+              to {
+                opacity: 1;
+                transform: translateX(0);
+              }
+            }
+            @keyframes slideInFromLeft {
+              from {
+                opacity: 0;
+                transform: translateX(-2rem);
+              }
+              to {
+                opacity: 1;
+                transform: translateX(0);
+              }
+            }
+            @keyframes slideOutToLeft {
+              from {
+                opacity: 1;
+                transform: translateX(0);
+              }
+              to {
+                opacity: 0;
+                transform: translateX(-2rem);
+              }
+            }
+            @keyframes slideOutToRight {
+              from {
+                opacity: 1;
+                transform: translateX(0);
+              }
+              to {
+                opacity: 0;
+                transform: translateX(2rem);
+              }
+            }
+            .animate-slide-in-right {
+              animation: slideInFromRight 300ms ease-out;
+            }
+            .animate-slide-in-left {
+              animation: slideInFromLeft 300ms ease-out;
+            }
+            .animate-slide-out-left {
+              animation: slideOutToLeft 300ms ease-in;
+            }
+            .animate-slide-out-right {
+              animation: slideOutToRight 300ms ease-in;
+            }
+          `}</style>
         </div>
 
         {/* Navigation Buttons - Bottom Right */}
