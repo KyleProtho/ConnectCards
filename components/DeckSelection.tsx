@@ -40,7 +40,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
   return (
     <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border border-gray-200">
       <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Connect Cards</h1>
-      <p className="text-gray-600 mb-8">Choose a category to start the conversation.</p>
+      <p className="text-gray-600 mb-8">Select a category to see where the conversation goes.</p>
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {deckOptions.map((deck) => {
@@ -77,18 +77,27 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       </div>
 
       <div className="mb-8">
-        <label htmlFor="questionCount" className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 mb-3">
           Number of Questions
         </label>
-        <input
-          type="number"
-          id="questionCount"
-          value={questionCount}
-          onChange={(e) => setQuestionCount(parseInt(e.target.value, 10) || 1)}
-          min="1"
-          max="50"
-          className="w-32 bg-white border border-gray-300 text-gray-900 text-center rounded-lg p-2 focus:ring-indigo-500 focus:border-indigo-500"
-        />
+        <div className="flex justify-center gap-3">
+          {[4, 8, 12, 16].map((count) => {
+            const isSelected = questionCount === count;
+            return (
+              <button
+                key={count}
+                onClick={() => setQuestionCount(count)}
+                className={`px-6 py-2 rounded-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-indigo-500 shadow-md hover:shadow-lg
+                  ${isSelected 
+                    ? 'bg-black text-white shadow-lg scale-105' 
+                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+                  }`}
+              >
+                {count}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <button
