@@ -155,22 +155,25 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
         {/* Back to Decks Button - Top Left */}
         <button 
           onClick={onBack}
-          className="absolute top-2 left-4 font-normal text-xs uppercase text-gray-500 z-10 bg-white px-3 py-1 rounded shadow-sm hover:text-gray-700 transition-colors"
+          className="absolute top-2 left-4 font-normal text-xs text-gray-500 z-10 bg-white px-3 py-1 rounded shadow-sm hover:text-gray-700 transition-colors"
           aria-label="Back to deck selection"
         >
           Back to Decks
         </button>
 
         {/* Banner at Top - Left Aligned, positioned closer to question */}
-        <div className="absolute flex items-center" style={{ top: '20%', left: '24px', transform: 'translateY(-50%)' }}>
-          <div className="px-2 py-1 md:px-3 md:py-1.5 font-bold text-xs md:text-sm" style={{ backgroundColor: bannerColor, color: textColor, fontVariant: 'small-caps', fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}>
+        <div className="absolute" style={{ top: '20%', left: '24px', transform: 'translateY(-50%)' }}>
+          <div 
+            className="text-xs md:text-sm font-bold pb-2" 
+            style={{ 
+              fontVariant: 'small-caps', 
+              fontFamily: "'TikTok Sans', sans-serif", 
+              fontWeight: 700,
+              color: '#000000',
+              borderBottom: `4px solid ${bannerColor}`
+            }}
+          >
             {formattedDeckTitle}
-          </div>
-          {/* Three vertical decorative lines */}
-          <div className="flex gap-0.5 ml-1.5">
-            <div className="w-0.5 h-5 md:h-6" style={{ backgroundColor: bannerColor }}></div>
-            <div className="w-0.5 h-5 md:h-6" style={{ backgroundColor: bannerColor }}></div>
-            <div className="w-0.5 h-5 md:h-6" style={{ backgroundColor: bannerColor }}></div>
           </div>
         </div>
 
@@ -178,7 +181,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
         <div className="relative flex items-center overflow-hidden" style={{ paddingTop: 'calc(20% + 6px)', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
           <p 
             key={currentIndex}
-            className={`text-2xl md:text-3xl lg:text-4xl font-bold text-left leading-relaxed ${
+            className={`text-2xl md:text-3xl lg:text-4xl font-normal text-left leading-relaxed ${
               animatingOut 
                 ? direction === 'next' 
                   ? 'animate-slide-out-left' 
@@ -192,7 +195,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
             style={{ 
               color: '#000000', 
               fontFamily: "'Newsreader', serif", 
-              fontWeight: 700
+              fontWeight: 400
             }}
           >
             {questions[currentIndex]}
