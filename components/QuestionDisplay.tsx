@@ -105,7 +105,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
   // Deck color mapping
   const getDeckColor = (deck: string): string => {
     const colorMap: Record<string, string> = {
-      'Dating': '#EFD0CA',
+      'Dating': '#622463',
       'Friends': '#5C7457',
       'Long-Term Relationship': '#A23E48',
       'Coworkers': '#3D3B30',
@@ -119,7 +119,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
   // Determine text color based on banner color (light or dark)
   const getTextColor = (bgColor: string): string => {
     // For light backgrounds, use dark text; for dark backgrounds, use light text
-    const lightColors = ['#EFD0CA']; // Dating
+    const lightColors: string[] = [];
     return lightColors.includes(bgColor) ? '#000000' : '#FFFFFF';
   };
 
@@ -160,6 +160,38 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
         >
           Back to Decks
         </button>
+
+        {/* Progress Indicator - Top Center */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 flex items-center gap-1">
+          {questions.map((_, index) => (
+            <React.Fragment key={index}>
+              <div
+                className="relative flex items-center justify-center"
+                style={{ width: '24px', height: '24px' }}
+              >
+                <div
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width: index === currentIndex ? '12px' : '8px',
+                    height: index === currentIndex ? '12px' : '8px',
+                    backgroundColor: index <= currentIndex ? bannerColor : '#E5E7EB',
+                    border: index === currentIndex ? `2px solid ${bannerColor}` : 'none',
+                    boxShadow: index === currentIndex ? `0 0 0 2px rgba(255, 255, 255, 0.8)` : 'none',
+                  }}
+                />
+              </div>
+              {index < questions.length - 1 && (
+                <div
+                  className="h-0.5 transition-all duration-300"
+                  style={{
+                    width: '16px',
+                    backgroundColor: index < currentIndex ? bannerColor : '#E5E7EB',
+                  }}
+                />
+              )}
+            </React.Fragment>
+          ))}
+        </div>
 
         {/* Banner at Top - Left Aligned, positioned closer to question */}
         <div className="absolute" style={{ top: '20%', left: '24px', transform: 'translateY(-50%)' }}>

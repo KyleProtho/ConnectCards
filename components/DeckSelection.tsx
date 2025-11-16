@@ -18,7 +18,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
   // Deck color mapping (matches QuestionDisplay)
   const getDeckColor = (deck: DeckType): string => {
     const colorMap: Record<string, string> = {
-      'Dating': '#EFD0CA',
+      'Dating': '#622463',
       'Friends': '#5C7457',
       'Long-Term Relationship': '#A23E48',
       'Coworkers': '#3D3B30',
@@ -31,7 +31,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
   // Determine text color based on background color (light or dark)
   const getTextColor = (bgColor: string): string => {
     // For light backgrounds, use dark text; for dark backgrounds, use light text
-    const lightColors = ['#EFD0CA']; // Dating
+    const lightColors: string[] = [];
     return lightColors.includes(bgColor) ? '#000000' : '#FFFFFF';
   };
   
