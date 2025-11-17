@@ -305,27 +305,19 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           <button
             onClick={handlePrevious}
             disabled={currentIndex === 0}
-            className="flex items-center gap-2 px-6 py-3 font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors border-2 min-h-[48px]"
+            className="text-xs md:text-sm font-bold pb-2 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
             style={{ 
-              backgroundColor: 'transparent', 
-              borderColor: bannerColor, 
-              color: bannerColor,
+              fontVariant: 'small-caps',
               fontFamily: "'TikTok Sans', sans-serif", 
-              fontWeight: 700 
-            }}
-            onMouseEnter={(e) => {
-              if (!e.currentTarget.disabled) {
-                e.currentTarget.style.backgroundColor = bannerColor;
-                e.currentTarget.style.color = textColor;
-              }
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = bannerColor;
+              fontWeight: 700,
+              color: '#000000',
+              backgroundColor: 'transparent',
+              border: 'none',
+              padding: 0
             }}
             aria-label="Previous question"
           >
-            <ArrowLeftIcon className="h-6 w-6" />
+            <ArrowLeftIcon className="h-4 w-4 inline-block mr-1" />
             Previous
           </button>
         </div>
@@ -334,25 +326,21 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
           <button
             onClick={handleNext}
             disabled={currentIndex === questions.length - 1}
-            className="flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md min-h-[48px]"
-            style={{ backgroundColor: bannerColor, fontFamily: "'TikTok Sans', sans-serif", fontWeight: 700 }}
-            onMouseEnter={(e) => {
-              if (!e.currentTarget.disabled) {
-                const hex = bannerColor.replace('#', '');
-                const r = parseInt(hex.substring(0, 2), 16);
-                const g = parseInt(hex.substring(2, 4), 16);
-                const b = parseInt(hex.substring(4, 6), 16);
-                const darker = `rgb(${Math.max(0, r - 30)}, ${Math.max(0, g - 30)}, ${Math.max(0, b - 30)})`;
-                e.currentTarget.style.backgroundColor = darker;
-              }
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = bannerColor;
+            className="text-xs md:text-sm font-bold pb-2 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+            style={{ 
+              fontVariant: 'small-caps',
+              fontFamily: "'TikTok Sans', sans-serif", 
+              fontWeight: 700,
+              color: '#000000',
+              backgroundColor: 'transparent',
+              border: 'none',
+              borderBottom: `4px solid ${bannerColor}`,
+              padding: 0
             }}
             aria-label="Next question"
           >
             Next
-            <ArrowRightIcon className="h-6 w-6" />
+            <ArrowRightIcon className="h-4 w-4 inline-block ml-1" />
           </button>
         </div>
       </div>
