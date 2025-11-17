@@ -313,7 +313,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
               color: '#000000',
               backgroundColor: 'transparent',
               border: 'none',
-              padding: 0
+              padding: '8px 12px'
             }}
             aria-label="Previous question"
           >
@@ -335,7 +335,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
               backgroundColor: 'transparent',
               border: 'none',
               borderBottom: `4px solid ${bannerColor}`,
-              padding: 0
+              padding: '8px 12px'
             }}
             aria-label="Next question"
           >
