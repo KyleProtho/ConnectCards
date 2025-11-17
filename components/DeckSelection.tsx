@@ -139,28 +139,30 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         >
           Choose number of questions
         </h2>
-        <div className="flex justify-center gap-3">
-          {[4, 8, 12, 16].map((count) => {
-            const isSelected = questionCount === count;
-            return (
-              <button
-                key={count}
-                onClick={() => setQuestionCount(count)}
-                className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 focus:outline-none
-                  ${isSelected 
-                    ? 'bg-black text-white shadow-md scale-[1.02]' 
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md'
-                  }`}
-                style={{ 
-                  fontFamily: "'TikTok Sans', sans-serif", 
-                  fontWeight: 700,
-                  fontVariant: 'normal'
-                }}
-              >
-                {count}
-              </button>
-            );
-          })}
+        <div className="flex justify-center items-center w-full px-4 overflow-x-auto">
+          <div className="flex justify-center gap-2 max-w-full">
+            {[4, 8, 12, 16].map((count) => {
+              const isSelected = questionCount === count;
+              return (
+                <button
+                  key={count}
+                  onClick={() => setQuestionCount(count)}
+                  className={`px-4 py-2 md:px-6 md:py-2.5 rounded-lg font-semibold transition-all duration-200 focus:outline-none flex-shrink-0
+                    ${isSelected 
+                      ? 'bg-black text-white shadow-md scale-[1.02]' 
+                      : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md'
+                    }`}
+                  style={{ 
+                    fontFamily: "'TikTok Sans', sans-serif", 
+                    fontWeight: 700,
+                    fontVariant: 'normal'
+                  }}
+                >
+                  {count}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
