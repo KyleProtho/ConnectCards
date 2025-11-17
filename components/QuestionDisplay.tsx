@@ -155,7 +155,16 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
         {/* Back to Decks Button - Top Left */}
         <button 
           onClick={onBack}
-          className="absolute top-2 left-4 font-normal text-xs text-gray-500 z-10 bg-white px-3 py-1 rounded shadow-sm hover:text-gray-700 transition-colors"
+          className="absolute top-2 left-4 text-xs z-10 hover:text-gray-700 transition-colors"
+          style={{ 
+            fontFamily: "'TikTok Sans', sans-serif", 
+            fontWeight: 400,
+            color: '#9CA3AF',
+            backgroundColor: 'transparent',
+            border: 'none',
+            padding: 0,
+            cursor: 'pointer'
+          }}
           aria-label="Back to deck selection"
         >
           Back to Decks
@@ -165,7 +174,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
         <div 
           className="absolute left-1/2 transform -translate-x-1/2 z-10 flex items-center justify-center"
           style={{ 
-            top: '60px',
+            top: '80px',
             maxWidth: 'calc(100% - 48px)',
             paddingLeft: '12px',
             paddingRight: '12px',
@@ -309,7 +318,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
             style={{ 
               fontVariant: 'small-caps',
               fontFamily: "'TikTok Sans', sans-serif", 
-              fontWeight: 700,
+              fontWeight: 500,
               color: '#000000',
               backgroundColor: 'transparent',
               border: 'none',
@@ -334,7 +343,6 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
               color: '#000000',
               backgroundColor: 'transparent',
               border: 'none',
-              borderBottom: `4px solid ${bannerColor}`,
               padding: '8px 12px'
             }}
             aria-label="Next question"
