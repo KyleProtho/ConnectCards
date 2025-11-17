@@ -221,7 +221,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
         </div>
 
         {/* Question Content - Left Aligned, top-aligned */}
-        <div className="relative flex items-start overflow-hidden" style={{ paddingTop: '160px', paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
+        <div className="relative flex items-start overflow-hidden pt-[160px] md:pt-[184px]" style={{ paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
           <p 
             key={currentIndex}
             className={`text-2xl md:text-3xl lg:text-4xl font-normal text-left leading-relaxed ${
