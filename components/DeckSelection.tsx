@@ -62,14 +62,17 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         style={{ 
           fontFamily: "'Newsreader', serif", 
           fontWeight: 400,
-          letterSpacing: '-0.02em'
+          letterSpacing: '0.02em'
         }}
       >
         Connect Cards
       </h1>
       <p 
-        className="text-base md:text-lg text-gray-600 mb-12" 
-        style={{ fontFamily: "'TikTok Sans', sans-serif" }}
+        className="text-sm md:text-base text-gray-600 mb-12" 
+        style={{ 
+          fontFamily: "'TikTok Sans', sans-serif",
+          fontWeight: 300
+        }}
       >
         Select a deck and see where the conversation goes.
       </p>
@@ -77,12 +80,14 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       {/* Step 1: Choose your deck */}
       <div className="mb-12">
         <h2 
-          className="text-sm font-bold text-gray-800 mb-6" 
+          className="text-xs md:text-sm font-bold mb-6" 
           style={{ 
             fontFamily: "'TikTok Sans', sans-serif",
             fontVariant: 'small-caps',
             fontWeight: 700,
-            letterSpacing: '0.05em'
+            color: '#000000',
+            borderBottom: '4px solid #9CA3AF',
+            paddingBottom: '8px'
           }}
         >
           Choose your deck
@@ -129,12 +134,14 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       {/* Step 2: Choose number of questions */}
       <div className="mb-12">
         <h2 
-          className="text-sm font-bold text-gray-800 mb-6" 
+          className="text-xs md:text-sm font-bold mb-6" 
           style={{ 
             fontFamily: "'TikTok Sans', sans-serif",
             fontVariant: 'small-caps',
             fontWeight: 700,
-            letterSpacing: '0.05em'
+            color: '#000000',
+            borderBottom: '4px solid #9CA3AF',
+            paddingBottom: '8px'
           }}
         >
           Choose number of questions
