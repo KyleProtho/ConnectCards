@@ -107,7 +107,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         Connect Cards
       </h1>
       <p 
-        className="text-sm md:text-base text-gray-600 mb-12" 
+        className="text-sm md:text-base text-gray-600 mb-12 leading-tight md:leading-normal" 
         style={{ 
           fontFamily: "'TikTok Sans', sans-serif",
           fontWeight: 300
@@ -129,7 +129,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         >
           CHOOSE YOUR VIBE
         </h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {deckOptions.map((deck) => {
             const deckColor = getDeckColor(deck);
             const isSelected = selectedDeck === deck;
