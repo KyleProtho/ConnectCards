@@ -116,7 +116,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         Connect Cards
       </h1>
       <p 
-        className="text-sm md:text-base text-gray-600 mb-12 leading-tight md:leading-normal" 
+        className="text-sm md:text-base text-gray-600 mb-8 leading-tight md:leading-normal" 
         style={{ 
           fontFamily: "'TikTok Sans', sans-serif",
           fontWeight: 300
@@ -125,7 +125,15 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         Spark conversations that actually go somewhere.
       </p>
       
-      {/* Step 1: Choose your vibe */}
+      {/* Divider */}
+      <div 
+        className="mb-12 h-px w-full"
+        style={{
+          background: 'linear-gradient(to right, transparent, #374151 20%, #374151 80%, transparent)'
+        }}
+      />
+      
+      {/* Step 1: Choose your deck */}
       <div className="mb-12">
         <h2 
           className="text-xs md:text-sm font-bold mb-6" 
@@ -136,7 +144,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
             color: '#000000'
           }}
         >
-          CHOOSE YOUR VIBE
+          CHOOSE YOUR DECK
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {deckOptions.map((deck) => {
@@ -206,7 +214,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
             color: '#000000'
           }}
         >
-          Choose number of questions
+          CHOOSE NUMBER OF QUESTIONS
         </h2>
         <div className="flex justify-center items-center w-full px-4 overflow-x-auto">
           <div className="flex justify-center gap-2 max-w-full">
