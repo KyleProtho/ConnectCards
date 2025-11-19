@@ -30,8 +30,8 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className={`min-h-screen text-gray-900 flex items-center justify-center p-4 ${generatedQuestions.length > 0 ? 'bg-gray-100' : 'bg-gray-100'}`}>
-      <div className="w-full max-w-2xl mx-auto">
+    <div className={`min-h-screen text-gray-900 ${generatedQuestions.length > 0 ? 'flex items-center justify-center bg-gray-100 p-4' : 'bg-white md:flex md:items-center md:justify-center md:bg-gray-100 md:p-4'}`}>
+      <div className={`w-full ${generatedQuestions.length > 0 ? 'max-w-2xl mx-auto' : 'md:max-w-2xl md:mx-auto'}`}>
         {generatedQuestions.length > 0 ? (
           <QuestionDisplay 
             questions={generatedQuestions} 

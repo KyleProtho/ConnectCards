@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DeckType } from '../types';
 
 // SVG icon content
@@ -21,6 +21,15 @@ interface DeckSelectionProps {
 const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
   const [selectedDeck, setSelectedDeck] = useState<DeckType | null>(null);
   const [questionCount, setQuestionCount] = useState<number>(12);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleStartClick = () => {
     if (selectedDeck) {
@@ -80,12 +89,12 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
 
   return (
     <div 
-      className="bg-white p-8 md:p-12 rounded-xl text-center"
+      className="bg-white p-8 md:p-12 md:rounded-xl text-center min-h-screen md:min-h-0"
       style={{
-        borderWidth: selectedDeckColor ? '2px' : '2px',
-        borderStyle: 'solid',
+        borderWidth: isMobile ? '0' : (selectedDeckColor ? '2px' : '2px'),
+        borderStyle: isMobile ? 'none' : 'solid',
         borderColor: selectedDeckColor || '#E5E7EB',
-        boxShadow: `
+        boxShadow: !isMobile ? `
           0 1px 0 rgba(0, 0, 0, 0.05),
           0 2px 0 rgba(0, 0, 0, 0.04),
           0 3px 0 rgba(0, 0, 0, 0.03),
@@ -93,7 +102,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
           0 5px 0 rgba(0, 0, 0, 0.01),
           0 6px 8px rgba(0, 0, 0, 0.08),
           0 8px 12px rgba(0, 0, 0, 0.06)
-        `
+        ` : 'none'
       }}
     >
       <h1 
