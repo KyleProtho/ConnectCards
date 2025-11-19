@@ -1,6 +1,19 @@
 import React, { useState } from 'react';
 import { DeckType } from '../types';
 
+// SVG icon content
+const DatingIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M480-520q-68-62-111-104.5T302-698q-24-31-33-54.5t-9-47.5q0-50 35-85t86-35q28 0 54 12.5t45 33.5q19-21 45-33.5t54-12.5q51 0 86 35t35 85q0 24-9 47.5T658-698q-24 31-67 73.5T480-520Zm0-108q72-66 106-107.5t34-64.5q0-17-12-28.5T579-840q-12 0-23.5 7T532-812l-51 59-51-57q-14-16-25.5-23t-23.5-7q-17 0-29 11.5T340-800q0 23 34 64.5T480-628ZM120-80v-122q-18-5-30-19t-14-34L40-640h25q23 0 40.5 16t19.5 39l24 265h171q33 0 56.5 23.5T400-240v40h-40v120h-60v-120H180v120h-60Zm320 0v-320H200q0-33 23.5-56.5T280-480h400q33 0 56.5 23.5T760-400H520v320h-80Zm160 0v-120h-40v-40q0-33 23.5-56.5T640-320h172l24-265q2-23 19-39t40-16h25l-35 385q-2 20-14.5 34T840-202v122h-60v-120H660v120h-60ZM480-628Z"/></svg>';
+
+const StrangersIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M475-160q4 0 8-2t6-4l328-328q12-12 17.5-27t5.5-30q0-16-5.5-30.5T817-607L647-777q-11-12-25.5-17.5T591-800q-15 0-30 5.5T534-777l-11 11 74 75q15 14 22 32t7 38q0 42-28.5 70.5T527-522q-20 0-38.5-7T456-550l-75-74-175 175q-3 3-4.5 6.5T200-435q0 8 6 14.5t14 6.5q4 0 8-2t6-4l136-136 56 56-135 136q-3 3-4.5 6.5T285-350q0 8 6 14t14 6q4 0 8-2t6-4l136-135 56 56-135 136q-3 2-4.5 6t-1.5 8q0 8 6 14t14 6q4 0 7.5-1.5t6.5-4.5l136-135 56 56-136 136q-3 3-4.5 6.5T454-180q0 8 6.5 14t14.5 6Zm-1 80q-37 0-65.5-24.5T375-166q-34-5-57-28t-28-57q-34-5-56.5-28.5T206-336q-38-5-62-33t-24-66q0-20 7.5-38.5T149-506l232-231 131 131q2 3 6 4.5t8 1.5q9 0 15-5.5t6-14.5q0-4-1.5-8t-4.5-6L398-777q-11-12-25.5-17.5T342-800q-15 0-30 5.5T285-777L144-635q-9 9-15 21t-8 24q-2 12 0 24.5t8 23.5l-58 58q-17-23-25-50.5T40-590q2-28 14-54.5T87-692l141-141q24-23 53.5-35t60.5-12q31 0 60.5 12t52.5 35l11 11 11-11q24-23 53.5-35t60.5-12q31 0 60.5 12t52.5 35l169 169q23 23 35 53t12 61q0 31-12 60.5T873-437L545-110q-14 14-32.5 22T474-80Zm-99-560Z"/></svg>';
+
+const FriendsIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z"/></svg>';
+
+const IntimacyIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M40-120v-160q0-34 23.5-57t56.5-23h131q20 0 38 10t29 27q29 39 71.5 61t90.5 22q49 0 91.5-22t70.5-61q13-17 30.5-27t36.5-10h131q34 0 57 23t23 57v160H640v-91q-35 25-75.5 38T480-160q-43 0-84-13.5T320-212v92H40Zm120-280q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T280-520q0 50-34.5 85T160-400Zm640 0q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T920-520q0 50-34.5 85T800-400Zm-320-80q-68-62-111-104.5T302-658q-24-31-33-54.5t-9-47.5q0-50 35-85t86-35q28 0 54 12.5t45 33.5q19-21 45-33.5t54-12.5q51 0 86 35t35 85q0 24-9 47.5T658-658q-24 31-67 73.5T480-480Zm0-108q72-66 106-107.5t34-64.5q0-17-12-28.5T579-800q-12 0-23.5 7T532-772l-51 59-51-57q-14-16-25.5-23t-23.5-7q-17 0-29 11.5T340-760q0 23 34 64.5T480-588Zm0 0Z"/></svg>';
+
+const CoworkersIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M160-120q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720h160v-80q0-33 23.5-56.5T400-880h160q33 0 56.5 23.5T640-800v80h160q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160Zm0-80h640v-440H160v440Zm240-520h160v-80H400v80ZM160-200v-440 440Z"/></svg>';
+
+const LongTermIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z"/></svg>';
+
 interface DeckSelectionProps {
   onStart: (deck: DeckType, count: number) => void;
 }
@@ -13,6 +26,32 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
     if (selectedDeck) {
       onStart(selectedDeck, Math.max(1, questionCount));
     }
+  };
+
+  // Deck icon mapping
+  const getDeckIcon = (deck: DeckType): string => {
+    const iconMap: Record<DeckType, string> = {
+      [DeckType.Dating]: DatingIcon,
+      [DeckType.Strangers]: StrangersIcon,
+      [DeckType.Friends]: FriendsIcon,
+      [DeckType.Intimacy]: IntimacyIcon,
+      [DeckType.Coworkers]: CoworkersIcon,
+      [DeckType.LongTerm]: LongTermIcon,
+    };
+    return iconMap[deck];
+  };
+
+  // Deck description mapping
+  const getDeckDescription = (deck: DeckType): string => {
+    const descriptionMap: Record<DeckType, string> = {
+      [DeckType.Dating]: 'For sparks, chemistry, and clarity.',
+      [DeckType.Strangers]: 'Get talking without small talk.',
+      [DeckType.Friends]: 'Laugh, reflect, and get a little real.',
+      [DeckType.Intimacy]: 'Because great sex starts with great communication.',
+      [DeckType.Coworkers]: 'Discover the people behind the job titles.',
+      [DeckType.LongTerm]: 'Because growing together takes curiosity.',
+    };
+    return descriptionMap[deck];
   };
 
   // Deck color mapping (matches QuestionDisplay)
@@ -74,10 +113,10 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
           fontWeight: 300
         }}
       >
-        Select a deck and see where the conversation goes.
+        Spark conversations that actually go somewhere.
       </p>
       
-      {/* Step 1: Choose your deck */}
+      {/* Step 1: Choose your vibe */}
       <div className="mb-12">
         <h2 
           className="text-xs md:text-sm font-bold mb-6" 
@@ -88,41 +127,58 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
             color: '#000000'
           }}
         >
-          Choose your deck
+          CHOOSE YOUR VIBE
         </h2>
         <div className="grid grid-cols-2 gap-4">
           {deckOptions.map((deck) => {
             const deckColor = getDeckColor(deck);
             const isSelected = selectedDeck === deck;
-            const textColor = isSelected ? getTextColor(deckColor) : undefined;
+            const deckIcon = getDeckIcon(deck);
+            const deckDescription = getDeckDescription(deck);
             return (
               <button
                 key={deck}
                 onClick={() => setSelectedDeck(deck)}
-                className={`p-5 rounded-lg font-semibold transition-all duration-200 focus:outline-none flex items-center justify-center min-h-[90px] h-full
+                className={`p-6 rounded-lg transition-all duration-200 focus:outline-none flex flex-col items-center justify-center min-h-[160px] h-full
                   ${isSelected 
-                    ? 'shadow-lg scale-[1.02]' 
+                    ? 'shadow-lg scale-[1.02] border-2' 
                     : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md'
                   }`}
                 style={{
-                  borderTopWidth: '4px',
-                  borderTopColor: deckColor,
-                  borderTopStyle: 'solid',
-                  fontVariant: 'small-caps',
+                  borderColor: isSelected ? deckColor : '#E5E7EB',
                   fontFamily: "'TikTok Sans', sans-serif",
-                  fontWeight: 700,
-                  ...(isSelected ? {
-                    backgroundColor: deckColor,
-                    color: textColor,
-                    borderLeft: 'none',
-                    borderRight: 'none',
-                    borderBottom: 'none',
-                    borderTopWidth: '4px',
-                    borderTopColor: deckColor
-                  } : {})
                 }}
               >
-                {deck}
+                <div 
+                  className="mb-4 flex items-center justify-center"
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                  }}
+                  dangerouslySetInnerHTML={{ __html: deckIcon.replace(/fill="#1f1f1f"/g, 'fill="#D4A574"').replace('height="24px"', 'height="48px"').replace('width="24px"', 'width="48px"') }}
+                />
+                <div 
+                  className="font-bold mb-2"
+                  style={{
+                    fontFamily: "'TikTok Sans', sans-serif",
+                    fontWeight: 700,
+                    fontSize: '1rem',
+                    color: isSelected ? deckColor : '#000000',
+                  }}
+                >
+                  {deck}
+                </div>
+                <div 
+                  className="text-sm leading-relaxed"
+                  style={{
+                    fontFamily: "'TikTok Sans', sans-serif",
+                    fontWeight: 400,
+                    color: '#000000',
+                    textAlign: 'center',
+                  }}
+                >
+                  {deckDescription}
+                </div>
               </button>
             );
           })}
@@ -182,7 +238,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
             letterSpacing: '0.05em'
           }}
         >
-          Start Conversation
+          Start Playing
         </button>
       </div>
     </div>
