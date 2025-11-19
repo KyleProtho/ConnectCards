@@ -28,6 +28,13 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
     return colorMap[deck] || '#DC2626';
   };
 
+  // Determine text color based on background color (light or dark)
+  const getTextColor = (bgColor: string): string => {
+    // For light backgrounds, use dark text; for dark backgrounds, use light text
+    const lightColors: string[] = [];
+    return lightColors.includes(bgColor) ? '#000000' : '#FFFFFF';
+  };
+
   const deckOptions = Object.values(DeckType);
 
   const selectedDeckColor = selectedDeck ? getDeckColor(selectedDeck) : undefined;
@@ -87,6 +94,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
           {deckOptions.map((deck) => {
             const deckColor = getDeckColor(deck);
             const isSelected = selectedDeck === deck;
+            const textColor = isSelected ? getTextColor(deckColor) : undefined;
             return (
               <button
                 key={deck}
@@ -94,17 +102,24 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
                 className={`p-5 rounded-lg font-semibold transition-all duration-200 focus:outline-none flex items-center justify-center min-h-[90px] h-full
                   ${isSelected 
                     ? 'shadow-lg scale-[1.02]' 
-                    : 'bg-white text-gray-700 hover:bg-gray-50 shadow-sm hover:shadow-md'
+                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md'
                   }`}
                 style={{
-                  borderWidth: '2px',
-                  borderColor: deckColor,
-                  borderStyle: 'solid',
+                  borderTopWidth: '4px',
+                  borderTopColor: deckColor,
+                  borderTopStyle: 'solid',
                   fontVariant: 'small-caps',
                   fontFamily: "'TikTok Sans', sans-serif",
                   fontWeight: 700,
-                  backgroundColor: 'white',
-                  color: '#000000'
+                  ...(isSelected ? {
+                    backgroundColor: deckColor,
+                    color: textColor,
+                    borderLeft: 'none',
+                    borderRight: 'none',
+                    borderBottom: 'none',
+                    borderTopWidth: '4px',
+                    borderTopColor: deckColor
+                  } : {})
                 }}
               >
                 {deck}
