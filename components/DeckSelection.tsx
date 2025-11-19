@@ -139,7 +139,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
               <button
                 key={deck}
                 onClick={() => setSelectedDeck(deck)}
-                className={`p-6 rounded-lg transition-all duration-200 focus:outline-none flex flex-col items-center justify-center min-h-[160px] h-full
+                className={`p-6 rounded-lg transition-all duration-200 focus:outline-none flex flex-col min-h-[140px] h-full
                   ${isSelected 
                     ? 'shadow-lg scale-[1.02] border-2' 
                     : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md'
@@ -149,32 +149,33 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
                   fontFamily: "'TikTok Sans', sans-serif",
                 }}
               >
-                <div 
-                  className="mb-4 flex items-center justify-center"
-                  style={{
-                    width: '48px',
-                    height: '48px',
-                  }}
-                  dangerouslySetInnerHTML={{ __html: deckIcon.replace(/fill="#1f1f1f"/g, 'fill="#D4A574"').replace('height="24px"', 'height="48px"').replace('width="24px"', 'width="48px"') }}
-                />
-                <div 
-                  className="font-bold mb-2"
-                  style={{
-                    fontFamily: "'TikTok Sans', sans-serif",
-                    fontWeight: 700,
-                    fontSize: '1rem',
-                    color: isSelected ? deckColor : '#000000',
-                  }}
-                >
-                  {deck}
+                <div className="flex items-center justify-start gap-3 mb-3">
+                  <div 
+                    className="flex items-center justify-center flex-shrink-0"
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                    }}
+                    dangerouslySetInnerHTML={{ __html: deckIcon.replace(/fill="#1f1f1f"/g, `fill="${isSelected ? deckColor : '#374151'}"`).replace('height="24px"', 'height="24px"').replace('width="24px"', 'width="24px"') }}
+                  />
+                  <div 
+                    className="font-bold"
+                    style={{
+                      fontFamily: "'TikTok Sans', sans-serif",
+                      fontWeight: 700,
+                      fontSize: '1rem',
+                      color: isSelected ? deckColor : '#000000',
+                    }}
+                  >
+                    {deck}
+                  </div>
                 </div>
                 <div 
-                  className="text-sm leading-relaxed"
+                  className="text-sm leading-relaxed text-left"
                   style={{
                     fontFamily: "'TikTok Sans', sans-serif",
                     fontWeight: 400,
                     color: '#000000',
-                    textAlign: 'center',
                   }}
                 >
                   {deckDescription}
