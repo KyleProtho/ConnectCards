@@ -28,13 +28,6 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
     return colorMap[deck] || '#DC2626';
   };
 
-  // Determine text color based on background color (light or dark)
-  const getTextColor = (bgColor: string): string => {
-    // For light backgrounds, use dark text; for dark backgrounds, use light text
-    const lightColors: string[] = [];
-    return lightColors.includes(bgColor) ? '#000000' : '#FFFFFF';
-  };
-  
   const deckOptions = Object.values(DeckType);
 
   const selectedDeckColor = selectedDeck ? getDeckColor(selectedDeck) : undefined;
@@ -85,18 +78,15 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
             fontFamily: "'TikTok Sans', sans-serif",
             fontVariant: 'small-caps',
             fontWeight: 700,
-            color: '#000000',
-            borderBottom: '4px solid #9CA3AF',
-            paddingBottom: '8px'
+            color: '#000000'
           }}
         >
           Choose your deck
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           {deckOptions.map((deck) => {
             const deckColor = getDeckColor(deck);
             const isSelected = selectedDeck === deck;
-            const textColor = isSelected ? getTextColor(deckColor) : undefined;
             return (
               <button
                 key={deck}
@@ -104,24 +94,17 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
                 className={`p-5 rounded-lg font-semibold transition-all duration-200 focus:outline-none flex items-center justify-center min-h-[90px] h-full
                   ${isSelected 
                     ? 'shadow-lg scale-[1.02]' 
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md'
+                    : 'bg-white text-gray-700 hover:bg-gray-50 shadow-sm hover:shadow-md'
                   }`}
                 style={{
-                  borderTopWidth: '4px',
-                  borderTopColor: deckColor,
-                  borderTopStyle: 'solid',
+                  borderWidth: '2px',
+                  borderColor: deckColor,
+                  borderStyle: 'solid',
                   fontVariant: 'small-caps',
                   fontFamily: "'TikTok Sans', sans-serif",
                   fontWeight: 700,
-                  ...(isSelected ? {
-                    backgroundColor: deckColor,
-                    color: textColor,
-                    borderLeft: 'none',
-                    borderRight: 'none',
-                    borderBottom: 'none',
-                    borderTopWidth: '4px',
-                    borderTopColor: deckColor
-                  } : {})
+                  backgroundColor: 'white',
+                  color: '#000000'
                 }}
               >
                 {deck}
@@ -139,9 +122,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
             fontFamily: "'TikTok Sans', sans-serif",
             fontVariant: 'small-caps',
             fontWeight: 700,
-            color: '#000000',
-            borderBottom: '4px solid #9CA3AF',
-            paddingBottom: '8px'
+            color: '#000000'
           }}
         >
           Choose number of questions
@@ -156,7 +137,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
                   onClick={() => setQuestionCount(count)}
                   className={`px-4 py-2 md:px-6 md:py-2.5 rounded-lg font-semibold transition-all duration-200 focus:outline-none flex-shrink-0
                     ${isSelected 
-                      ? 'bg-black text-white shadow-md scale-[1.02]' 
+                      ? 'bg-gray-700 text-white shadow-md scale-[1.02]' 
                       : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md'
                     }`}
                   style={{ 
@@ -178,7 +159,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         <button
           onClick={handleStartClick}
           disabled={!selectedDeck}
-          className="w-full md:w-auto px-12 py-4 bg-black text-white font-bold rounded-lg shadow-md hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+          className="w-full md:w-auto px-12 py-4 bg-gray-700 text-white font-bold rounded-lg shadow-md hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
           style={{ 
             fontFamily: "'TikTok Sans', sans-serif", 
             fontWeight: 700,
