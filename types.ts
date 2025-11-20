@@ -6,4 +6,6 @@ export enum DeckType {
   Coworkers = 'Coworkers',
   Friends = 'Friends',
   Intimacy = 'Intimacy',
+  SelfReflection = 'Self-Reflection',
+  Amusing = 'Amusing',
 }

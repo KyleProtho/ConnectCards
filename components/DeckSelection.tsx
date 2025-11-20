@@ -14,6 +14,10 @@ const CoworkersIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" vie
 
 const LongTermIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z"/></svg>';
 
+const SelfReflectionIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M491-339q70 0 119-45t49-109q0-57-36.5-96.5T534-629q-47 0-79.5 30T422-525q0 19 7.5 37t21.5 33l57-57q-3-2-4.5-5t-1.5-7q0-11 9-17.5t23-6.5q20 0 33 16.5t13 39.5q0 31-25.5 52.5T492-418q-47 0-79.5-38T380-549q0-29 11-55.5t31-46.5l-57-57q-32 31-49 72t-17 86q0 88 56 149.5T491-339ZM240-80v-172q-57-52-88.5-121.5T120-520q0-150 105-255t255-105q125 0 221.5 73.5T827-615l52 205q5 19-7 34.5T840-360h-80v120q0 33-23.5 56.5T680-160h-80v80h-80v-160h160v-200h108l-38-155q-23-91-98-148t-172-57q-116 0-198 81t-82 197q0 60 24.5 114t69.5 96l26 24v208h-80Zm254-360Z"/></svg>';
+
+const AmusingIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M480-280q66 0 113-47t47-113H320q0 66 47 113t113 47ZM280-600h160q0-33-23.5-56.5T360-680q-33 0-56.5 23.5T280-600Zm240 0h160q0-33-23.5-56.5T600-680q-33 0-56.5 23.5T520-600ZM480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440v-440h720v440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Zm0-80q116 0 198-82t82-198v-360H200v360q0 116 82 198t198 82Zm0-320Z"/></svg>';
+
 interface DeckSelectionProps {
   onStart: (deck: DeckType, count: number) => void;
 }
@@ -46,6 +50,8 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       [DeckType.Intimacy]: IntimacyIcon,
       [DeckType.Coworkers]: CoworkersIcon,
       [DeckType.LongTerm]: LongTermIcon,
+      [DeckType.SelfReflection]: SelfReflectionIcon,
+      [DeckType.Amusing]: AmusingIcon,
     };
     return iconMap[deck];
   };
@@ -59,6 +65,8 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       [DeckType.Intimacy]: 'Because great sex starts with great communication.',
       [DeckType.Coworkers]: 'Discover the people behind the job titles.',
       [DeckType.LongTerm]: 'Because growing together takes curiosity.',
+      [DeckType.SelfReflection]: 'Turn inward and discover what you find.',
+      [DeckType.Amusing]: 'Lighten the mood and share a laugh.',
     };
     return descriptionMap[deck];
   };
@@ -71,7 +79,9 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       'Long-Term Relationship': '#A23E48',
       'Coworkers': '#3D3B30',
       'Strangers': '#6C8EAD',
-      'Intimacy': '#DC2626', // Default red for Intimacy
+      'Intimacy': '#DC2626',
+      'Self-Reflection': '#0492c9',
+      'Amusing': '#f7a960',
     };
     return colorMap[deck] || '#DC2626';
   };

@@ -110,6 +110,8 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
       'Long-Term Relationship': '#A23E48',
       'Coworkers': '#3D3B30',
       'Strangers': '#6C8EAD',
+      'Self-Reflection': '#0492c9',
+      'Amusing': '#f7a960',
     };
     return colorMap[deck] || '#DC2626'; // Default to red if deck not found
   };
