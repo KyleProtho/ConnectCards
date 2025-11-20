@@ -127,8 +127,10 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       
       {/* Divider */}
       <div 
-        className="mb-12 h-px w-full"
+        className="mb-12 mx-auto"
         style={{
+          height: '15px',
+          width: '25%',
           background: 'linear-gradient(to right, transparent, #374151 20%, #374151 80%, transparent)'
         }}
       />
