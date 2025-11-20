@@ -126,7 +126,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         Connect Cards
       </h1>
       <p 
-        className="text-sm md:text-base text-gray-600 mb-12 leading-tight md:leading-normal" 
+        className="text-sm md:text-base text-gray-600 mb-20 leading-tight md:leading-normal" 
         style={{ 
           fontFamily: "'TikTok Sans', sans-serif",
           fontWeight: 300
@@ -136,7 +136,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       </p>
       
       {/* Step 1: Choose your deck */}
-      <div className="mb-12">
+      <div className="mb-20">
         <h2 
           className="text-xs md:text-sm font-bold mb-6" 
           style={{ 
@@ -206,7 +206,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       </div>
 
       {/* Step 2: Choose number of questions */}
-      <div className="mb-12">
+      <div className="mb-20">
         <h2 
           className="text-xs md:text-sm font-bold mb-6" 
           style={{ 
@@ -246,7 +246,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       </div>
 
       {/* Step 3: Start */}
-      <div>
+      <div className="mt-4">
         <button
           onClick={handleStartClick}
           disabled={!selectedDeck}
