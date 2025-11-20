@@ -62,7 +62,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       [DeckType.Dating]: 'For sparks, chemistry, and clarity.',
       [DeckType.Strangers]: 'Get talking without small talk.',
       [DeckType.Friends]: 'Laugh, reflect, and get a little real.',
-      [DeckType.Intimacy]: 'Because great sex starts with great communication.',
+      [DeckType.Intimacy]: 'Strip away assumptions.',
       [DeckType.Coworkers]: 'Discover the people behind the job titles.',
       [DeckType.LongTerm]: 'Because growing together takes curiosity.',
       [DeckType.SelfReflection]: 'Turn inward and discover what you find.',

@@ -235,7 +235,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
         <div className="relative flex items-start overflow-hidden pt-[160px] md:pt-[184px]" style={{ paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
           <p 
             key={currentIndex}
-            className={`text-2xl md:text-3xl lg:text-4xl font-normal text-left leading-relaxed ${
+            className={`text-2xl md:text-3xl lg:text-4xl font-normal text-left leading-relaxed md:leading-loose ${
               animatingOut 
                 ? direction === 'next' 
                   ? 'animate-slide-out-left' 
