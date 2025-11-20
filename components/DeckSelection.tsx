@@ -116,7 +116,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         Connect Cards
       </h1>
       <p 
-        className="text-sm md:text-base text-gray-600 mb-8 leading-tight md:leading-normal" 
+        className="text-sm md:text-base text-gray-600 mb-12 leading-tight md:leading-normal" 
         style={{ 
           fontFamily: "'TikTok Sans', sans-serif",
           fontWeight: 300
@@ -124,16 +124,6 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       >
         Spark conversations that actually go somewhere.
       </p>
-      
-      {/* Divider */}
-      <div 
-        className="mb-12 mx-auto"
-        style={{
-          height: '15px',
-          width: '25%',
-          background: 'linear-gradient(to right, transparent, #374151 20%, #374151 80%, transparent)'
-        }}
-      />
       
       {/* Step 1: Choose your deck */}
       <div className="mb-12">
