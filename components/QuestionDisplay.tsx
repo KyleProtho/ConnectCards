@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { ArrowLeft, ArrowRight, ChevronLeft } from 'lucide-react';
 
 interface QuestionDisplayProps {
   questions: string[];
   deckTitle: string;
   onBack: () => void;
 }
-
-const ArrowRightIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-  </svg>
-);
-
-const ArrowLeftIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-  </svg>
-);
 
 const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle, onBack }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -86,7 +75,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
 
   const onTouchEnd = () => {
     if (!touchStartRef.current || !touchEndRef.current) return;
-    
+
     const distance = touchStartRef.current - touchEndRef.current;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
@@ -96,264 +85,158 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
     } else if (isRightSwipe) {
       handlePrevious();
     }
-    
+
     // Reset
     touchStartRef.current = null;
     touchEndRef.current = null;
   };
 
-  // Deck color mapping
-  const getDeckColor = (deck: string): string => {
-    const colorMap: Record<string, string> = {
-      'Dating': '#622463',
-      'Friends': '#5C7457',
-      'Long-Term Relationship': '#A23E48',
-      'Coworkers': '#3D3B30',
-      'Strangers': '#6C8EAD',
-      'Self-Reflection': '#0492c9',
-      'Amusing': '#f7a960',
-    };
-    return colorMap[deck] || '#DC2626'; // Default to red if deck not found
-  };
-
-  const bannerColor = getDeckColor(deckTitle);
-  
-  // Determine text color based on banner color (light or dark)
-  const getTextColor = (bgColor: string): string => {
-    // For light backgrounds, use dark text; for dark backgrounds, use light text
-    const lightColors: string[] = [];
-    return lightColors.includes(bgColor) ? '#000000' : '#FFFFFF';
-  };
-
-  const textColor = getTextColor(bannerColor);
-
   // Format deck title (replace underscores with spaces)
   const formattedDeckTitle = deckTitle.replace(/_/g, ' ');
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
-      {/* Card Container */}
-      <div 
-        className="bg-white rounded-xl overflow-hidden relative" 
-        style={{ 
-          minHeight: '500px', 
-          borderColor: bannerColor, 
-          borderWidth: '2px', 
-          borderStyle: 'solid',
-          boxShadow: `
-            0 1px 0 rgba(0, 0, 0, 0.05),
-            0 2px 0 rgba(0, 0, 0, 0.04),
-            0 3px 0 rgba(0, 0, 0, 0.03),
-            0 4px 0 rgba(0, 0, 0, 0.02),
-            0 5px 0 rgba(0, 0, 0, 0.01),
-            0 6px 8px rgba(0, 0, 0, 0.08),
-            0 8px 12px rgba(0, 0, 0, 0.06)
-          `
-        }}
+    <div className="relative w-full h-screen bg-white flex flex-col">
+      {/* Top Bar */}
+      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+        <button
+          onClick={onBack}
+          className="p-2 text-gray-600 hover:text-black transition-colors rounded-full hover:bg-gray-100"
+          aria-label="Back to deck selection"
+        >
+          <ChevronLeft size={24} strokeWidth={1.5} />
+        </button>
+
+        <h1 className="text-black text-lg font-medium tracking-wide">
+          {formattedDeckTitle}
+        </h1>
+
+        <div className="w-10" /> {/* Spacer for alignment */}
+      </div>
+
+      {/* Progress Indicator */}
+      <div className="px-6 py-6">
+        <div className="flex items-center gap-2 max-w-2xl mx-auto">
+          {questions.map((_, index) => (
+            <div
+              key={index}
+              className="h-1 flex-1 rounded-full transition-all duration-300"
+              style={{
+                backgroundColor: index <= currentIndex ? '#000000' : '#E5E7EB',
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Question Content */}
+      <div
+        className="flex-1 flex items-center justify-center px-6 pb-24"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
-        {/* Back to Decks Button - Top Left */}
-        <button 
-          onClick={onBack}
-          className="absolute top-2 left-4 text-xs z-10 hover:text-gray-700 transition-colors"
-          style={{ 
-            fontFamily: "'TikTok Sans', sans-serif", 
-            fontWeight: 400,
-            color: '#9CA3AF',
-            backgroundColor: 'transparent',
-            border: 'none',
-            padding: 0,
-            cursor: 'pointer'
-          }}
-          aria-label="Back to deck selection"
-        >
-          Back to Decks
-        </button>
-
-        {/* Progress Indicator - Between Back button and Deck title */}
-        <div 
-          className="absolute left-1/2 transform -translate-x-1/2 z-10 flex items-center justify-center"
-          style={{ 
-            top: '80px',
-            maxWidth: 'calc(100% - 48px)',
-            paddingLeft: '12px',
-            paddingRight: '12px',
-            overflow: 'hidden'
-          }}
-        >
-          <div className="flex items-center gap-0.5 md:gap-1 flex-nowrap">
-            {questions.map((_, index) => (
-              <React.Fragment key={index}>
-                <div
-                  className="relative flex items-center justify-center flex-shrink-0"
-                  style={{ width: '16px', height: '16px' }}
-                >
-                  <div
-                    className="rounded-full transition-all duration-300"
-                    style={{
-                      width: index === currentIndex ? '10px' : '6px',
-                      height: index === currentIndex ? '10px' : '6px',
-                      backgroundColor: index <= currentIndex ? bannerColor : '#E5E7EB',
-                      border: index === currentIndex ? `2px solid ${bannerColor}` : 'none',
-                      boxShadow: index === currentIndex ? `0 0 0 2px rgba(255, 255, 255, 0.8)` : 'none',
-                    }}
-                  />
-                </div>
-                {index < questions.length - 1 && (
-                  <div
-                    className="h-0.5 transition-all duration-300 flex-shrink-0"
-                    style={{
-                      width: '8px',
-                      backgroundColor: index < currentIndex ? bannerColor : '#E5E7EB',
-                    }}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
-
-        {/* Banner at Top - Left Aligned, positioned lower */}
-        <div className="absolute" style={{ top: '120px', left: '24px' }}>
-          <div 
-            className="text-xs md:text-sm font-bold pb-2" 
-            style={{ 
-              fontVariant: 'small-caps', 
-              fontFamily: "'TikTok Sans', sans-serif", 
-              fontWeight: 700,
-              color: '#000000',
-              borderBottom: `4px solid ${bannerColor}`
-            }}
-          >
-            {formattedDeckTitle}
-          </div>
-        </div>
-
-        {/* Question Content - Left Aligned, top-aligned */}
-        <div className="relative flex items-start overflow-hidden pt-[160px] md:pt-[184px]" style={{ paddingBottom: '60px', paddingLeft: '24px', paddingRight: '24px', minHeight: '400px' }}>
-          <p 
+        <div className="max-w-2xl w-full">
+          <p
             key={currentIndex}
-            className={`text-2xl md:text-3xl lg:text-4xl font-normal text-left leading-relaxed md:leading-loose ${
-              animatingOut 
-                ? direction === 'next' 
-                  ? 'animate-slide-out-left' 
+            className={`text-3xl md:text-4xl lg:text-5xl font-normal text-center leading-relaxed text-black ${animatingOut
+                ? direction === 'next'
+                  ? 'animate-slide-out-left'
                   : 'animate-slide-out-right'
                 : shouldSlideIn
                   ? direction === 'next'
                     ? 'animate-slide-in-right'
                     : 'animate-slide-in-left'
                   : ''
-            }`}
-            style={{ 
-              color: '#000000', 
-              fontFamily: "'Newsreader', serif", 
-              fontWeight: 400
-            }}
+              }`}
           >
             {questions[currentIndex]}
           </p>
-          <style>{`
-            @keyframes slideInFromRight {
-              from {
-                opacity: 0;
-                transform: translateX(2rem);
-              }
-              to {
-                opacity: 1;
-                transform: translateX(0);
-              }
-            }
-            @keyframes slideInFromLeft {
-              from {
-                opacity: 0;
-                transform: translateX(-2rem);
-              }
-              to {
-                opacity: 1;
-                transform: translateX(0);
-              }
-            }
-            @keyframes slideOutToLeft {
-              from {
-                opacity: 1;
-                transform: translateX(0);
-              }
-              to {
-                opacity: 0;
-                transform: translateX(-2rem);
-              }
-            }
-            @keyframes slideOutToRight {
-              from {
-                opacity: 1;
-                transform: translateX(0);
-              }
-              to {
-                opacity: 0;
-                transform: translateX(2rem);
-              }
-            }
-            .animate-slide-in-right {
-              animation: slideInFromRight 300ms ease-out;
-            }
-            .animate-slide-in-left {
-              animation: slideInFromLeft 300ms ease-out;
-            }
-            .animate-slide-out-left {
-              animation: slideOutToLeft 300ms ease-in;
-            }
-            .animate-slide-out-right {
-              animation: slideOutToRight 300ms ease-in;
-            }
-          `}</style>
         </div>
+      </div>
 
-        {/* Navigation Buttons */}
-        {/* Previous Button - Bottom Left */}
-        <div className="absolute bottom-4 left-4">
+      {/* Navigation Buttons */}
+      <div className="absolute bottom-0 left-0 right-0 px-6 py-6 bg-white border-t border-gray-200">
+        <div className="max-w-2xl mx-auto flex items-center justify-between">
           <button
             onClick={handlePrevious}
             disabled={currentIndex === 0}
-            className="text-xs md:text-sm font-bold pb-2 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
-            style={{ 
-              fontVariant: 'small-caps',
-              fontFamily: "'TikTok Sans', sans-serif", 
-              fontWeight: 500,
-              color: '#000000',
-              backgroundColor: 'transparent',
-              border: 'none',
-              padding: '8px 12px'
-            }}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-black transition-colors disabled:opacity-30 disabled:cursor-not-allowed rounded-full hover:bg-gray-100 disabled:hover:bg-transparent"
             aria-label="Previous question"
           >
-            <ArrowLeftIcon className="h-4 w-4 inline-block mr-1" />
+            <ArrowLeft size={18} strokeWidth={2} />
             Previous
           </button>
-        </div>
-        {/* Next Button - Bottom Right */}
-        <div className="absolute bottom-4 right-4">
+
+          <div className="text-sm text-gray-500 font-medium">
+            {currentIndex + 1} / {questions.length}
+          </div>
+
           <button
             onClick={handleNext}
             disabled={currentIndex === questions.length - 1}
-            className="text-xs md:text-sm font-bold pb-2 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
-            style={{ 
-              fontVariant: 'small-caps',
-              fontFamily: "'TikTok Sans', sans-serif", 
-              fontWeight: 700,
-              color: '#000000',
-              backgroundColor: 'transparent',
-              border: 'none',
-              padding: '8px 12px'
-            }}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-black transition-colors disabled:opacity-30 disabled:cursor-not-allowed rounded-full hover:bg-gray-100 disabled:hover:bg-transparent"
             aria-label="Next question"
           >
             Next
-            <ArrowRightIcon className="h-4 w-4 inline-block ml-1" />
+            <ArrowRight size={18} strokeWidth={2} />
           </button>
         </div>
       </div>
+
+      <style>{`
+        @keyframes slideInFromRight {
+          from {
+            opacity: 0;
+            transform: translateX(2rem);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @keyframes slideInFromLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-2rem);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @keyframes slideOutToLeft {
+          from {
+            opacity: 1;
+            transform: translateX(0);
+          }
+          to {
+            opacity: 0;
+            transform: translateX(-2rem);
+          }
+        }
+        @keyframes slideOutToRight {
+          from {
+            opacity: 1;
+            transform: translateX(0);
+          }
+          to {
+            opacity: 0;
+            transform: translateX(2rem);
+          }
+        }
+        .animate-slide-in-right {
+          animation: slideInFromRight 300ms ease-out;
+        }
+        .animate-slide-in-left {
+          animation: slideInFromLeft 300ms ease-out;
+        }
+        .animate-slide-out-left {
+          animation: slideOutToLeft 300ms ease-in;
+        }
+        .animate-slide-out-right {
+          animation: slideOutToRight 300ms ease-in;
+        }
+      `}</style>
     </div>
   );
 };

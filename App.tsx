@@ -94,17 +94,15 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      <div className={`w-full ${generatedQuestions.length > 0 ? 'flex items-center justify-center p-4' : ''}`}>
-        {generatedQuestions.length > 0 ? (
-          <QuestionDisplay
-            questions={generatedQuestions}
-            deckTitle={currentDeckTitle}
-            onBack={handleGoBack}
-          />
-        ) : (
-          <DeckSelection onStart={handleDeckSelect} />
-        )}
-      </div>
+      {generatedQuestions.length > 0 ? (
+        <QuestionDisplay
+          questions={generatedQuestions}
+          deckTitle={currentDeckTitle}
+          onBack={handleGoBack}
+        />
+      ) : (
+        <DeckSelection onStart={handleDeckSelect} />
+      )}
     </div>
   );
 };

@@ -22,7 +22,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onStart }) => {
   return (
     <div className="relative w-full h-screen overflow-hidden bg-white flex flex-col items-center justify-between py-12 px-6">
       {/* Background Constellation Effect - Grayscale */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
         {/* Connecting Lines */}
         <svg className="absolute inset-0 w-full h-full">
           {nodes.map((node, i) => {
@@ -34,7 +34,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onStart }) => {
                 y1={`${node.y}%`}
                 x2={`${nextNode.x}%`}
                 y2={`${nextNode.y}%`}
-                stroke="rgba(0, 0, 0, 0.15)"
+                stroke="rgba(107, 114, 128, 0.4)"
                 strokeWidth="1"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
@@ -48,7 +48,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onStart }) => {
         {nodes.map((node) => (
           <motion.div
             key={node.id}
-            className="absolute rounded-full bg-gray-400"
+            className="absolute rounded-full bg-gray-500"
             style={{
               left: `${node.x}%`,
               top: `${node.y}%`,
@@ -57,7 +57,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onStart }) => {
             }}
             animate={{
               scale: [1, 1.5, 1],
-              opacity: [0.3, 0.6, 0.3],
+              opacity: [0.5, 0.8, 0.5],
             }}
             transition={{
               duration: node.duration,
