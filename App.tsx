@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import DeckSelection from './components/DeckSelection';
 import QuestionDisplay from './components/QuestionDisplay';
+import OnboardingScreen from './components/OnboardingScreen';
 import { DeckType } from './types';
 import { questionDecks } from './data/questions';
 
@@ -14,6 +15,7 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 };
 
 const App: React.FC = () => {
+  const [showOnboarding, setShowOnboarding] = useState(true);
   const [generatedQuestions, setGeneratedQuestions] = useState<string[]>([]);
   const [currentDeckTitle, setCurrentDeckTitle] = useState<string>('');
 
@@ -29,14 +31,22 @@ const App: React.FC = () => {
     setCurrentDeckTitle('');
   }, []);
 
+  const handleOnboardingStart = useCallback(() => {
+    setShowOnboarding(false);
+  }, []);
+
+  if (showOnboarding) {
+    return <OnboardingScreen onStart={handleOnboardingStart} />;
+  }
+
   return (
     <div className={`min-h-screen text-gray-900 ${generatedQuestions.length > 0 ? 'flex items-center justify-center bg-gray-100 p-4' : 'bg-white md:flex md:items-center md:justify-center md:bg-gray-100 md:p-4'}`}>
       <div className={`w-full ${generatedQuestions.length > 0 ? 'max-w-2xl mx-auto' : 'md:max-w-2xl md:mx-auto'}`}>
         {generatedQuestions.length > 0 ? (
-          <QuestionDisplay 
-            questions={generatedQuestions} 
+          <QuestionDisplay
+            questions={generatedQuestions}
             deckTitle={currentDeckTitle}
-            onBack={handleGoBack} 
+            onBack={handleGoBack}
           />
         ) : (
           <DeckSelection onStart={handleStart} />
