@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight, ChevronLeft } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronLeft, ThumbsUp, ThumbsDown } from 'lucide-react';
 
 interface QuestionDisplayProps {
   questions: string[];
@@ -12,6 +12,8 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
   const [direction, setDirection] = useState<'next' | 'previous'>('next');
   const [animatingOut, setAnimatingOut] = useState(false);
   const [shouldSlideIn, setShouldSlideIn] = useState(false);
+  // Track feedback for each question: 'up', 'down', or null
+  const [feedback, setFeedback] = useState<Record<number, 'up' | 'down' | null>>({});
 
   const handleNext = () => {
     if (currentIndex < questions.length - 1 && !animatingOut) {
@@ -91,6 +93,14 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
     touchEndRef.current = null;
   };
 
+  // Handle feedback clicks
+  const handleFeedback = (type: 'up' | 'down') => {
+    setFeedback(prev => ({
+      ...prev,
+      [currentIndex]: prev[currentIndex] === type ? null : type
+    }));
+  };
+
   // Format deck title (replace underscores with spaces)
   const formattedDeckTitle = deckTitle.replace(/_/g, ' ');
 
@@ -135,22 +145,46 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
-        <div className="max-w-2xl w-full">
+        <div className="max-w-2xl w-full flex flex-col items-center">
           <p
             key={currentIndex}
             className={`text-3xl md:text-4xl lg:text-5xl font-normal text-center leading-relaxed text-black ${animatingOut
+              ? direction === 'next'
+                ? 'animate-slide-out-left'
+                : 'animate-slide-out-right'
+              : shouldSlideIn
                 ? direction === 'next'
-                  ? 'animate-slide-out-left'
-                  : 'animate-slide-out-right'
-                : shouldSlideIn
-                  ? direction === 'next'
-                    ? 'animate-slide-in-right'
-                    : 'animate-slide-in-left'
-                  : ''
+                  ? 'animate-slide-in-right'
+                  : 'animate-slide-in-left'
+                : ''
               }`}
           >
             {questions[currentIndex]}
           </p>
+
+          {/* Feedback Icons */}
+          <div className="flex items-center gap-6 mt-12">
+            <button
+              onClick={() => handleFeedback('up')}
+              className={`p-3 rounded-full transition-all duration-200 ${feedback[currentIndex] === 'up'
+                  ? 'bg-black text-white'
+                  : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-gray-600'
+                }`}
+              aria-label="Thumbs up"
+            >
+              <ThumbsUp size={24} strokeWidth={1.5} />
+            </button>
+            <button
+              onClick={() => handleFeedback('down')}
+              className={`p-3 rounded-full transition-all duration-200 ${feedback[currentIndex] === 'down'
+                  ? 'bg-black text-white'
+                  : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-gray-600'
+                }`}
+              aria-label="Thumbs down"
+            >
+              <ThumbsDown size={24} strokeWidth={1.5} />
+            </button>
+          </div>
         </div>
       </div>
 
