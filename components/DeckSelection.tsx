@@ -28,6 +28,11 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
   const [selectedDeck, setSelectedDeck] = useState<DeckType | null>(null);
   const [questionCount, setQuestionCount] = useState<number>(12);
   const [includeWildcards, setIncludeWildcards] = useState<boolean>(false);
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [initialRect, setInitialRect] = useState<{ top: number; left: number; width: number; height: number } | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number>(0);
+  const [touchStartTime, setTouchStartTime] = useState<number>(0);
 
   // Deck icon mapping
   const getDeckIcon = (deck: DeckType, color: string) => {
@@ -96,6 +101,76 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
     getDeckDescription(deck).toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Handle deck selection with animation
+  const handleDeckSelect = (deck: DeckType, event: React.MouseEvent<HTMLButtonElement>) => {
+    if (isAnimating || selectedDeck) return;
+
+    // Capture initial position
+    const rect = event.currentTarget.getBoundingClientRect();
+    // Adjust for container offset if needed, but since we use fixed/absolute relative to viewport or container...
+    // Let's use offset relative to the grid container for absolute positioning
+    const container = event.currentTarget.parentElement;
+    if (container) {
+      const containerRect = container.getBoundingClientRect();
+      setInitialRect({
+        top: rect.top - containerRect.top,
+        left: rect.left - containerRect.left,
+        width: rect.width,
+        height: rect.height
+      });
+    }
+
+    setIsAnimating(true);
+    setSelectedDeck(deck);
+
+    // Trigger expansion in next frame
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsExpanded(true);
+        // Animation completes after 500ms
+        setTimeout(() => setIsAnimating(false), 500);
+      });
+    });
+  };
+
+  // Handle deck deselection
+  const handleDeselectDeck = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+
+    // Trigger collapse in next frame to allow unselected cards to mount with opacity 0 first
+    requestAnimationFrame(() => {
+      setIsExpanded(false);
+    });
+
+    setTimeout(() => {
+      setSelectedDeck(null);
+      setInitialRect(null);
+      setIsAnimating(false);
+    }, 500);
+  };
+
+  // Touch event handlers for swipe-down gesture
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!selectedDeck) return;
+    setTouchStartY(e.touches[0].clientY);
+    setTouchStartTime(Date.now());
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!selectedDeck) return;
+    const touchEndY = e.changedTouches[0].clientY;
+    const touchEndTime = Date.now();
+    const deltaY = touchEndY - touchStartY;
+    const deltaTime = touchEndTime - touchStartTime;
+    const velocity = deltaY / deltaTime;
+
+    // Swipe down detection: minimum 50px distance and positive velocity
+    if (deltaY > 50 && velocity > 0.3) {
+      handleDeselectDeck();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white p-6 flex flex-col">
       {/* Header */}
@@ -109,7 +184,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       </div>
 
       {/* Main Title */}
-      <div className="text-center mb-8">
+      <div className={`text-center mb-8 transition-opacity duration-300 ${selectedDeck ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         <h2 className="text-3xl font-light text-black mb-6">Choose Your Deck</h2>
 
         {/* Search Bar */}
@@ -128,23 +203,91 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       </div>
 
       {/* Deck Grid */}
-      <div className="flex-1 max-w-2xl mx-auto w-full mb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredDecks.map((deck) => {
+      <div
+        className={`flex-1 max-w-2xl mx-auto w-full mb-12 relative`}
+        style={{
+          minHeight: selectedDeck ? '200px' : 'auto'
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Back Button - appears above selected deck */}
+        {selectedDeck && !isAnimating && (
+          <div className="absolute top-0 left-0 z-10 animate-fadeIn">
+            <button
+              onClick={handleDeselectDeck}
+              className="flex items-center gap-2 text-gray-600 hover:text-black transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
+                <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+              </svg>
+              <span className="text-sm font-medium">Back to decks</span>
+            </button>
+          </div>
+        )}
+
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4`}>
+          {filteredDecks.map((deck, index) => {
             const deckColor = getDeckColor(deck);
             const deckIcon = getDeckIcon(deck, '#000000');
             const deckDescription = getDeckDescription(deck);
             const isSelected = selectedDeck === deck;
 
+            // Hide unselected cards when a deck is selected AND animation is done
+            // This ensures the grid collapses to just the selected card height
+            if (selectedDeck && !isSelected && !isAnimating) {
+              return null;
+            }
+
+            // Style calculation for animation
+            let style: React.CSSProperties = {
+              backgroundColor: isSelected ? `${deckColor}80` : undefined,
+              borderColor: isSelected ? '#9ca3af' : undefined,
+              boxShadow: isSelected ? '0 10px 25px rgba(0,0,0,0.15)' : undefined,
+            };
+
+            if (selectedDeck) {
+              if (isSelected) {
+                if (isAnimating && initialRect) {
+                  style = {
+                    ...style,
+                    position: 'absolute',
+                    zIndex: 20,
+                    top: isExpanded ? '56px' : `${initialRect.top}px`, // 56px = top-14
+                    left: isExpanded ? '0' : `${initialRect.left}px`,
+                    width: isExpanded ? '100%' : `${initialRect.width}px`,
+                    height: isExpanded ? 'auto' : `${initialRect.height}px`,
+                    transition: 'all 500ms cubic-bezier(0.4, 0, 0.2, 1)',
+                  };
+                } else {
+                  style = {
+                    ...style,
+                    position: 'relative',
+                    zIndex: 20,
+                    marginTop: '56px',
+                    width: '100%',
+                  };
+                }
+              } else {
+                // Unselected cards fade out/in based on expansion state
+                style = {
+                  ...style,
+                  opacity: isExpanded ? 0 : 1,
+                  pointerEvents: 'none',
+                  transition: 'opacity 200ms ease-out',
+                };
+              }
+            }
+
             return (
               <button
                 key={deck}
-                onClick={() => setSelectedDeck(deck)}
-                className={`relative p-6 rounded-lg text-left transition-all duration-300 group flex flex-col border-2 ${isSelected
-                  ? 'border-gray-400 shadow-lg'
+                onClick={(e) => handleDeckSelect(deck, e)}
+                className={`p-6 rounded-lg text-left group flex flex-col border-2 transition-all duration-300 ${selectedDeck && isSelected
+                  ? 'md:col-span-2' // Full width when selected
                   : 'bg-white border-gray-200 hover:border-gray-300 hover:shadow-md'
                   }`}
-                style={isSelected ? { backgroundColor: `${deckColor}80` } : {}}
+                style={style}
               >
                 <div className="flex items-start gap-4 mb-4">
                   <div className="p-3 rounded-full flex-shrink-0" style={{ backgroundColor: `${deckColor}80` }}>
@@ -165,8 +308,9 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         </div>
       </div>
 
+
       {/* Inline Deck Details Section - appears when a deck is selected */}
-      {selectedDeck && (
+      {selectedDeck && !isAnimating && (
         <div
           className="max-w-2xl mx-auto w-full mb-12 overflow-hidden animate-slideDown"
           style={{
@@ -174,8 +318,8 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
           }}
         >
           {/* Deck Description */}
-          <div className="px-6 py-8 mb-8 bg-gray-50 rounded-lg border border-gray-200">
-            <p className="text-gray-700 leading-relaxed text-base text-center">
+          <div className="mb-6">
+            <p className="text-gray-600 leading-relaxed text-sm italic text-left">
               {getLongDeckDescription(selectedDeck)}
             </p>
           </div>
@@ -215,8 +359,8 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
                     key={count}
                     onClick={() => setQuestionCount(count)}
                     className={`text-xs transition-colors ${questionCount === count
-                        ? 'text-black font-semibold'
-                        : 'text-gray-400 hover:text-gray-600'
+                      ? 'text-black font-semibold'
+                      : 'text-gray-400 hover:text-gray-600'
                       }`}
                   >
                     {count}
