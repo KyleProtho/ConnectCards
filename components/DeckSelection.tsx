@@ -24,14 +24,7 @@ interface DeckSelectionProps {
 }
 
 const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
-  const [selectedDeck, setSelectedDeck] = useState<DeckType | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-
-  const handleStartClick = () => {
-    if (selectedDeck) {
-      onStart(selectedDeck);
-    }
-  };
 
   // Deck icon mapping
   const getDeckIcon = (deck: DeckType, color: string) => {
@@ -86,20 +79,20 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-[#0f172a] to-[#1e1b4b] text-white p-6 flex flex-col">
+    <div className="min-h-screen bg-white p-6 flex flex-col">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-white/90 text-lg font-medium tracking-wide" style={{ fontFamily: "'TikTok Sans', sans-serif" }}>
+        <h1 className="text-black text-lg font-medium tracking-wide">
           Connect Cards
         </h1>
-        <button className="p-2 text-white/80 hover:text-white transition-colors rounded-full hover:bg-white/10">
+        <button className="p-2 text-gray-600 hover:text-black transition-colors rounded-full hover:bg-gray-100">
           <Settings size={24} strokeWidth={1.5} />
         </button>
       </div>
 
       {/* Main Title */}
-      <div className="text-center mb-6">
-        <h2 className="text-3xl font-semibold text-white mb-6">Choose Your Deck</h2>
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-light text-black mb-6">Choose Your Deck</h2>
 
         {/* Search Bar */}
         <div className="relative max-w-md mx-auto">
@@ -111,43 +104,40 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
             placeholder="Search decks..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+            className="w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-full text-black placeholder-gray-400 focus:outline-none focus:border-black transition-colors"
           />
         </div>
       </div>
 
       {/* Deck Grid */}
       <div className="flex-1 max-w-2xl mx-auto w-full mb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredDecks.map((deck) => {
             const deckColor = getDeckColor(deck);
-            const isSelected = selectedDeck === deck;
-            const deckIcon = getDeckIcon(deck, deckColor);
+            const deckIcon = getDeckIcon(deck, '#000000');
             const deckDescription = getDeckDescription(deck);
 
             return (
               <button
                 key={deck}
-                onClick={() => setSelectedDeck(deck)}
-                className={`relative p-8 rounded-3xl text-center transition-all duration-300 group flex flex-col items-center
-                  ${isSelected
-                    ? 'bg-slate-800/90 ring-2 ring-blue-500/50 shadow-xl shadow-blue-500/10 scale-[1.02]'
-                    : 'bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 hover:scale-[1.01]'
-                  }`}
+                onClick={() => onStart(deck)}
+                className="relative p-6 rounded-lg text-left transition-all duration-200 group flex flex-col border-2 bg-white border-gray-200 hover:border-gray-300 hover:shadow-md"
               >
-                <div className="mb-6 p-4 rounded-2xl bg-white/5 group-hover:scale-110 transition-transform duration-300 shadow-inner">
-                  {deckIcon}
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="p-3 rounded-full flex-shrink-0" style={{ backgroundColor: `${deckColor}15` }}>
+                    {deckIcon}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg font-medium text-black mb-1">
+                      {deck}
+                    </h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {deckDescription}
+                    </p>
+                  </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-white mb-3 tracking-tight">
-                  {deck}
-                </h3>
-
-                <p className="text-sm text-gray-400 leading-relaxed mb-6 flex-grow font-light">
-                  {deckDescription}
-                </p>
-
-                <div className="flex items-center text-xs font-medium text-gray-500 uppercase tracking-widest bg-black/20 px-3 py-1 rounded-full">
+                <div className="flex items-center text-xs text-gray-500 mt-auto">
                   30 Questions
                 </div>
               </button>
@@ -156,20 +146,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         </div>
       </div>
 
-      {/* Bottom Actions */}
-      <div className="max-w-2xl mx-auto w-full space-y-6 pb-6">
-        <button
-          onClick={handleStartClick}
-          disabled={!selectedDeck}
-          className={`w-full py-4 rounded-xl font-bold text-lg tracking-wide transition-all duration-300
-            ${selectedDeck
-              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transform hover:-translate-y-0.5'
-              : 'bg-slate-800 text-gray-500 cursor-not-allowed'
-            }`}
-        >
-          Select Deck
-        </button>
-      </div>
+
     </div>
   );
 };

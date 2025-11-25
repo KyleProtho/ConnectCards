@@ -27,88 +27,59 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
   const questionOptions = [4, 8, 12, 16];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-[#0f172a] to-[#1e1b4b] text-white flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       {/* Top Navigation Bar */}
-      <div className="flex justify-between items-center px-6 pt-8 pb-6">
+      <div className="flex justify-between items-center px-6 pt-8 pb-6 border-b border-gray-100">
         <button
           onClick={onBack}
-          className="p-2 text-white/80 hover:text-white transition-colors rounded-full hover:bg-white/10"
+          className="p-2 text-gray-600 hover:text-black transition-colors rounded-full hover:bg-gray-100"
         >
           <ChevronLeft size={24} strokeWidth={1.5} />
         </button>
 
-        <h1 className="text-white/90 text-lg font-medium tracking-wide" style={{ fontFamily: "'TikTok Sans', sans-serif" }}>
+        <h1 className="text-black text-lg font-medium tracking-wide">
           {deck}
         </h1>
 
-        <button className="p-2 text-white/80 hover:text-white transition-colors rounded-full hover:bg-white/10">
+        <button className="p-2 text-gray-600 hover:text-black transition-colors rounded-full hover:bg-gray-100">
           <Share2 size={24} strokeWidth={1.5} />
         </button>
       </div>
 
-      {/* Deck Banner Image */}
-      <div className="px-6 mb-6">
+      {/* Deck Banner */}
+      <div className="px-6 pt-8 mb-6">
         <div
-          className="w-full h-64 rounded-3xl shadow-2xl relative overflow-hidden"
+          className="w-full h-48 rounded-lg relative overflow-hidden border-l-4"
           style={{
-            background: `linear-gradient(135deg, ${deckColor}40, ${deckColor}20, #1e1b4b)`,
+            backgroundColor: '#F9FAFB',
+            borderLeftColor: deckColor,
           }}
         >
-          {/* Neon wave effect */}
-          <div className="absolute inset-0 opacity-60">
-            <svg className="w-full h-full" viewBox="0 0 400 300" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id={`gradient-${deck}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{ stopColor: deckColor, stopOpacity: 0.8 }} />
-                  <stop offset="50%" style={{ stopColor: '#8b5cf6', stopOpacity: 0.6 }} />
-                  <stop offset="100%" style={{ stopColor: '#3b82f6', stopOpacity: 0.4 }} />
-                </linearGradient>
-              </defs>
-              <path
-                d="M0,150 Q100,100 200,150 T400,150 L400,300 L0,300 Z"
-                fill={`url(#gradient-${deck})`}
-                className="animate-pulse"
-              />
-              <path
-                d="M0,180 Q100,130 200,180 T400,180 L400,300 L0,300 Z"
-                fill={`url(#gradient-${deck})`}
-                opacity="0.5"
-                className="animate-pulse"
-                style={{ animationDelay: '0.5s' }}
-              />
-            </svg>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <h2 className="text-4xl font-light text-black">
+              {deck}
+            </h2>
           </div>
-
-          {/* Glow effect */}
-          <div
-            className="absolute inset-0 blur-3xl opacity-30"
-            style={{
-              background: `radial-gradient(circle at 50% 50%, ${deckColor}, transparent 70%)`,
-            }}
-          />
         </div>
       </div>
 
-      {/* Deck Title & Description */}
+      {/* Deck Description */}
       <div className="px-6 mb-8">
-        <h2 className="text-3xl font-bold text-white mb-3 tracking-tight">
-          {deck}
-        </h2>
-        <p className="text-gray-400 leading-relaxed text-base">
+        <p className="text-gray-600 leading-relaxed text-base">
           {deckDescription}
         </p>
       </div>
 
       {/* Number of Questions Section */}
       <div className="px-6 mb-8">
-        <label className="text-sm text-gray-400 uppercase tracking-wider font-medium mb-4 block">
+        <label className="text-sm text-gray-500 uppercase tracking-wider font-medium mb-4 block">
           Number of Questions
         </label>
 
         {/* Slider */}
         <div className="mb-2">
           <div className="flex items-center gap-4">
-            <span className="text-2xl font-bold text-white min-w-[3rem]">
+            <span className="text-2xl font-medium text-black min-w-[3rem]">
               {questionCount}
             </span>
             <input
@@ -118,9 +89,9 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
               step="4"
               value={questionCount}
               onChange={(e) => setQuestionCount(Number(e.target.value))}
-              className="flex-1 h-1 bg-white/20 rounded-full appearance-none cursor-pointer slider"
+              className="flex-1 h-1 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
               style={{
-                background: `linear-gradient(to right, ${deckColor} 0%, ${deckColor} ${((questionCount - 4) / 12) * 100}%, rgba(255,255,255,0.2) ${((questionCount - 4) / 12) * 100}%, rgba(255,255,255,0.2) 100%)`,
+                background: `linear-gradient(to right, #000000 0%, #000000 ${((questionCount - 4) / 12) * 100}%, #E5E7EB ${((questionCount - 4) / 12) * 100}%, #E5E7EB 100%)`,
               }}
             />
           </div>
@@ -133,8 +104,8 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
               key={count}
               onClick={() => setQuestionCount(count)}
               className={`text-xs transition-colors ${questionCount === count
-                  ? 'text-white font-semibold'
-                  : 'text-gray-500 hover:text-gray-300'
+                ? 'text-black font-semibold'
+                : 'text-gray-400 hover:text-gray-600'
                 }`}
             >
               {count}
@@ -145,17 +116,17 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
 
       {/* Wildcard Toggle Section */}
       <div className="px-6 mb-12">
-        <div className="flex items-center justify-between bg-white/5 rounded-2xl p-5 border border-white/10">
+        <div className="flex items-center justify-between bg-gray-50 rounded-lg p-5 border border-gray-200">
           <div className="flex-1">
-            <h3 className="text-white font-medium mb-1">Include wildcards</h3>
-            <p className="text-sm text-gray-400">
+            <h3 className="text-black font-medium mb-1">Include wildcards</h3>
+            <p className="text-sm text-gray-600">
               Add a few surprising questions to the mix.
             </p>
           </div>
 
           <button
             onClick={() => setIncludeWildcards(!includeWildcards)}
-            className={`relative w-14 h-8 rounded-full transition-colors duration-300 ${includeWildcards ? 'bg-blue-600' : 'bg-gray-600'
+            className={`relative w-14 h-8 rounded-full transition-colors duration-300 ${includeWildcards ? 'bg-black' : 'bg-gray-300'
               }`}
           >
             <div
@@ -173,7 +144,7 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
       <div className="px-6 pb-8">
         <button
           onClick={handleStartClick}
-          className="w-full py-4 rounded-full font-bold text-lg tracking-wide transition-all duration-300 bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500 text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transform hover:-translate-y-0.5"
+          className="w-full py-4 rounded-full font-medium text-base transition-all duration-200 bg-black text-white hover:bg-gray-800 active:scale-[0.98]"
         >
           Start Conversation
         </button>
@@ -186,19 +157,19 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: white;
+          background: black;
           cursor: pointer;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .slider::-moz-range-thumb {
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: white;
+          background: black;
           cursor: pointer;
           border: none;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
       `}</style>
     </div>

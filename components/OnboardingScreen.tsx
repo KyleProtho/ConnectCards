@@ -20,14 +20,12 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onStart }) => {
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-[#0f172a] to-[#1e1b4b] text-white flex flex-col items-center justify-between py-12 px-6">
-
-      {/* Background Constellation Effect */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
-        {/* Connecting Lines (Simplified for performance/visuals) */}
+    <div className="relative w-full h-screen overflow-hidden bg-white flex flex-col items-center justify-between py-12 px-6">
+      {/* Background Constellation Effect - Grayscale */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
+        {/* Connecting Lines */}
         <svg className="absolute inset-0 w-full h-full">
           {nodes.map((node, i) => {
-            // Connect each node to the next one to form a simple chain/network
             const nextNode = nodes[i + 1] || nodes[0];
             return (
               <motion.line
@@ -36,7 +34,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onStart }) => {
                 y1={`${node.y}%`}
                 x2={`${nextNode.x}%`}
                 y2={`${nextNode.y}%`}
-                stroke="rgba(255, 255, 255, 0.15)"
+                stroke="rgba(0, 0, 0, 0.15)"
                 strokeWidth="1"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
@@ -46,11 +44,11 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onStart }) => {
           })}
         </svg>
 
-        {/* Glowing Nodes */}
+        {/* Grayscale Nodes */}
         {nodes.map((node) => (
           <motion.div
             key={node.id}
-            className="absolute rounded-full bg-blue-400 blur-[1px]"
+            className="absolute rounded-full bg-gray-400"
             style={{
               left: `${node.x}%`,
               top: `${node.y}%`,
@@ -59,7 +57,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onStart }) => {
             }}
             animate={{
               scale: [1, 1.5, 1],
-              opacity: [0.3, 0.8, 0.3],
+              opacity: [0.3, 0.6, 0.3],
             }}
             transition={{
               duration: node.duration,
@@ -73,52 +71,33 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onStart }) => {
 
       {/* Hamburger Menu */}
       <div className="absolute top-6 left-6 z-20">
-        <button className="p-2 text-white/80 hover:text-white transition-colors">
-          <Menu size={24} />
+        <button className="p-2 text-gray-600 hover:text-black transition-colors">
+          <Menu size={24} strokeWidth={1.5} />
         </button>
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 flex flex-col items-center w-full max-w-md mt-16 space-y-2 text-center">
-        <motion.h1
-          className="text-4xl font-light tracking-tight text-white md:text-5xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          Connect Cards.
-        </motion.h1>
-        <motion.p
-          className="text-lg font-light text-gray-300"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-        >
+      <div className="relative z-10 flex flex-col items-center w-full max-w-md mt-auto mb-auto text-center">
+        <h1 className="text-5xl md:text-6xl font-light tracking-tight text-black mb-4">
+          Connect Cards
+        </h1>
+        <p className="text-lg text-gray-600 font-light">
           Spark meaningful conversations.
-        </motion.p>
+        </p>
       </div>
 
       {/* Actions */}
-      <div className="relative z-10 flex flex-col items-center w-full max-w-md space-y-8 mb-8">
-        <motion.button
+      <div className="relative z-10 flex flex-col items-center w-full max-w-md space-y-6 mb-8">
+        <button
           onClick={onStart}
-          className="w-full max-w-[280px] h-[60px] rounded-full bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500 text-white font-medium text-lg shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-shadow active:scale-95"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          whileHover={{ scale: 1.02 }}
+          className="w-full max-w-[280px] h-[56px] rounded-full bg-black text-white font-medium text-base hover:bg-gray-800 transition-colors active:scale-[0.98]"
         >
           Get Started
-        </motion.button>
+        </button>
 
-        <motion.button
-          className="text-sm text-gray-400 hover:text-white transition-colors"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
+        <button className="text-sm text-gray-500 hover:text-black transition-colors">
           Already have an account? Sign in
-        </motion.button>
+        </button>
       </div>
     </div>
   );
