@@ -20,17 +20,16 @@ const SelfReflectionIcon = (color: string) => <svg xmlns="http://www.w3.org/2000
 const AmusingIcon = (color: string) => <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill={color}><path d="M480-280q66 0 113-47t47-113H320q0 66 47 113t113 47ZM280-600h160q0-33-23.5-56.5T360-680q-33 0-56.5 23.5T280-600Zm240 0h160q0-33-23.5-56.5T600-680q-33 0-56.5 23.5T520-600ZM480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440v-440h720v440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Zm0-80q116 0 198-82t82-198v-360H200v360q0 116 82 198t198 82Zm0-320Z" /></svg>;
 
 interface DeckSelectionProps {
-  onStart: (deck: DeckType, count: number) => void;
+  onStart: (deck: DeckType) => void;
 }
 
 const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
   const [selectedDeck, setSelectedDeck] = useState<DeckType | null>(null);
-  const [questionCount, setQuestionCount] = useState<number>(12);
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleStartClick = () => {
     if (selectedDeck) {
-      onStart(selectedDeck, Math.max(1, questionCount));
+      onStart(selectedDeck);
     }
   };
 
@@ -159,25 +158,6 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
 
       {/* Bottom Actions */}
       <div className="max-w-2xl mx-auto w-full space-y-6 pb-6">
-        {/* Question Count Selector (Simplified) */}
-        <div className="flex justify-center items-center gap-3">
-          <span className="text-sm text-gray-400 uppercase tracking-wider font-medium">Questions:</span>
-          <div className="flex bg-slate-800/50 rounded-lg p-1">
-            {[4, 8, 12, 16].map((count) => (
-              <button
-                key={count}
-                onClick={() => setQuestionCount(count)}
-                className={`px-3 py-1 rounded-md text-sm font-medium transition-all ${questionCount === count
-                  ? 'bg-white/10 text-white shadow-sm'
-                  : 'text-gray-400 hover:text-gray-200'
-                  }`}
-              >
-                {count}
-              </button>
-            ))}
-          </div>
-        </div>
-
         <button
           onClick={handleStartClick}
           disabled={!selectedDeck}
@@ -187,7 +167,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
               : 'bg-slate-800 text-gray-500 cursor-not-allowed'
             }`}
         >
-          Start Conversation
+          Select Deck
         </button>
       </div>
     </div>
