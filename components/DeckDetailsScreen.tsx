@@ -29,7 +29,7 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Top Navigation Bar */}
-      <div className="flex justify-between items-center px-6 pt-8 pb-6 border-b border-gray-100">
+      <div className="flex justify-between items-center px-6 pt-12 pb-6 border-b border-gray-100">
         <button
           onClick={onBack}
           className="p-2 text-gray-600 hover:text-black transition-colors rounded-full hover:bg-gray-100"
@@ -81,7 +81,7 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
         </div>
 
         {/* Tick Labels */}
-        <div className="flex justify-between px-12 mt-3">
+        <div className="flex justify-between px-12 ml-14 mt-3">
           {questionOptions.map((count) => (
             <button
               key={count}
