@@ -21,28 +21,28 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onStart }) => {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-[#0f172a] to-[#1e1b4b] text-white flex flex-col items-center justify-between py-12 px-6">
-      
+
       {/* Background Constellation Effect */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
         {/* Connecting Lines (Simplified for performance/visuals) */}
         <svg className="absolute inset-0 w-full h-full">
           {nodes.map((node, i) => {
-             // Connect each node to the next one to form a simple chain/network
-             const nextNode = nodes[i + 1] || nodes[0];
-             return (
-               <motion.line
-                 key={`line-${i}`}
-                 x1={`${node.x}%`}
-                 y1={`${node.y}%`}
-                 x2={`${nextNode.x}%`}
-                 y2={`${nextNode.y}%`}
-                 stroke="rgba(255, 255, 255, 0.15)"
-                 strokeWidth="1"
-                 initial={{ pathLength: 0, opacity: 0 }}
-                 animate={{ pathLength: 1, opacity: 1 }}
-                 transition={{ duration: 2, delay: i * 0.1, ease: "easeInOut" }}
-               />
-             );
+            // Connect each node to the next one to form a simple chain/network
+            const nextNode = nodes[i + 1] || nodes[0];
+            return (
+              <motion.line
+                key={`line-${i}`}
+                x1={`${node.x}%`}
+                y1={`${node.y}%`}
+                x2={`${nextNode.x}%`}
+                y2={`${nextNode.y}%`}
+                stroke="rgba(255, 255, 255, 0.15)"
+                strokeWidth="1"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 2, delay: i * 0.1, ease: "easeInOut" }}
+              />
+            );
           })}
         </svg>
 
@@ -80,15 +80,15 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onStart }) => {
 
       {/* Content Container */}
       <div className="relative z-10 flex flex-col items-center w-full max-w-md mt-16 space-y-2 text-center">
-        <motion.h1 
+        <motion.h1
           className="text-4xl font-light tracking-tight text-white md:text-5xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          Connect & Converse.
+          Connect Cards.
         </motion.h1>
-        <motion.p 
+        <motion.p
           className="text-lg font-light text-gray-300"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
