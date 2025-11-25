@@ -63,14 +63,14 @@ const App: React.FC = () => {
 
   const getDeckDescription = (deck: DeckType): string => {
     const descriptionMap: Record<DeckType, string> = {
-      [DeckType.Dating]: 'For sparks, chemistry, and clarity.',
-      [DeckType.Strangers]: 'Get talking without small talk.',
-      [DeckType.Friends]: 'Laugh, reflect, and get a little real.',
-      [DeckType.Intimacy]: 'Strip away assumptions.',
-      [DeckType.Coworkers]: 'Discover the people behind the job titles.',
-      [DeckType.LongTerm]: 'Because growing together takes curiosity.',
-      [DeckType.SelfReflection]: 'Turn inward and discover what you find.',
-      [DeckType.Amusing]: 'Lighten the mood and share a laugh.',
+      [DeckType.Dating]: 'Navigate the early stages of romance with questions designed to reveal compatibility, values, and chemistry. Perfect for first dates or getting to know someone you are interested in.',
+      [DeckType.Strangers]: 'Break the ice and skip the small talk with thoughtful questions that help you connect with new people in meaningful ways. Great for networking events, travel, or any new encounter.',
+      [DeckType.Friends]: 'Deepen your friendships by exploring shared experiences, dreams, and perspectives. These questions help you laugh together while discovering new layers of your connection.',
+      [DeckType.Intimacy]: 'Explore physical and sexual intimacy with questions about desires, boundaries, and affection. Designed to help partners communicate openly about sex, touch, and what makes them feel safe and connected.',
+      [DeckType.Coworkers]: 'Transform workplace relationships by discovering the real people behind professional roles. Perfect for team building, remote teams, or simply getting to know your colleagues better.',
+      [DeckType.LongTerm]: 'Keep your long-term relationship fresh and growing with questions that spark curiosity, alignment, and continued discovery. Because knowing someone deeply is a lifelong journey.',
+      [DeckType.SelfReflection]: 'Explore your own thoughts, values, and aspirations through introspective questions. Use these alone for journaling or with a trusted companion for mutual growth.',
+      [DeckType.Amusing]: 'Bring lightness and laughter to any gathering with playful, creative questions. Perfect for parties, road trips, or whenever you need to lift the mood.',
     };
     return descriptionMap[deck];
   };

@@ -136,10 +136,6 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
                     </p>
                   </div>
                 </div>
-
-                <div className="flex items-center text-xs text-gray-500 mt-auto">
-                  30 Questions
-                </div>
               </button>
             );
           })}

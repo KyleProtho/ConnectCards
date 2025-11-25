@@ -46,38 +46,21 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
         </button>
       </div>
 
-      {/* Deck Banner */}
-      <div className="px-6 pt-8 mb-6">
-        <div
-          className="w-full h-48 rounded-lg relative overflow-hidden border-l-4"
-          style={{
-            backgroundColor: '#F9FAFB',
-            borderLeftColor: deckColor,
-          }}
-        >
-          <div className="absolute inset-0 flex items-center justify-center">
-            <h2 className="text-4xl font-light text-black">
-              {deck}
-            </h2>
-          </div>
-        </div>
-      </div>
-
       {/* Deck Description */}
-      <div className="px-6 mb-8">
-        <p className="text-gray-600 leading-relaxed text-base">
+      <div className="px-6 pt-12 mb-16">
+        <p className="text-gray-600 leading-relaxed text-lg text-center max-w-md mx-auto">
           {deckDescription}
         </p>
       </div>
 
       {/* Number of Questions Section */}
-      <div className="px-6 mb-8">
-        <label className="text-sm text-gray-500 uppercase tracking-wider font-medium mb-4 block">
+      <div className="px-6 mb-16">
+        <label className="text-sm text-gray-500 uppercase tracking-wider font-medium mb-6 block">
           Number of Questions
         </label>
 
         {/* Slider */}
-        <div className="mb-2">
+        <div className="mb-3">
           <div className="flex items-center gap-4">
             <span className="text-2xl font-medium text-black min-w-[3rem]">
               {questionCount}
@@ -86,7 +69,7 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
               type="range"
               min="4"
               max="16"
-              step="4"
+              step="1"
               value={questionCount}
               onChange={(e) => setQuestionCount(Number(e.target.value))}
               className="flex-1 h-1 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
@@ -98,7 +81,7 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
         </div>
 
         {/* Tick Labels */}
-        <div className="flex justify-between px-12 mt-2">
+        <div className="flex justify-between px-12 mt-3">
           {questionOptions.map((count) => (
             <button
               key={count}
@@ -115,8 +98,8 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
       </div>
 
       {/* Wildcard Toggle Section */}
-      <div className="px-6 mb-12">
-        <div className="flex items-center justify-between bg-gray-50 rounded-lg p-5 border border-gray-200">
+      <div className="px-6 mb-16">
+        <div className="flex items-center justify-between bg-gray-50 rounded-lg p-6 border border-gray-200">
           <div className="flex-1">
             <h3 className="text-black font-medium mb-1">Include wildcards</h3>
             <p className="text-sm text-gray-600">
