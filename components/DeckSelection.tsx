@@ -118,8 +118,8 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       </div>
 
       {/* Deck Grid */}
-      <div className="flex-1 max-w-2xl mx-auto w-full mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="flex-1 max-w-2xl mx-auto w-full mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredDecks.map((deck) => {
             const deckColor = getDeckColor(deck);
             const isSelected = selectedDeck === deck;
@@ -130,28 +130,26 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
               <button
                 key={deck}
                 onClick={() => setSelectedDeck(deck)}
-                className={`relative p-5 rounded-2xl text-left transition-all duration-300 group
+                className={`relative p-8 rounded-3xl text-center transition-all duration-300 group flex flex-col items-center
                   ${isSelected
-                    ? 'bg-slate-800/80 ring-2 ring-blue-500 shadow-lg shadow-blue-500/20'
-                    : 'bg-slate-800/40 hover:bg-slate-800/60 border border-white/5 hover:border-white/10'
+                    ? 'bg-slate-800/90 ring-2 ring-blue-500/50 shadow-xl shadow-blue-500/10 scale-[1.02]'
+                    : 'bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 hover:scale-[1.01]'
                   }`}
               >
-                <div className="flex flex-col h-full">
-                  <div className="mb-4 p-2 rounded-xl bg-white/5 w-fit group-hover:scale-110 transition-transform duration-300">
-                    {deckIcon}
-                  </div>
+                <div className="mb-6 p-4 rounded-2xl bg-white/5 group-hover:scale-110 transition-transform duration-300 shadow-inner">
+                  {deckIcon}
+                </div>
 
-                  <h3 className="text-lg font-bold text-white mb-1" style={{ color: isSelected ? deckColor : 'white' }}>
-                    {deck}
-                  </h3>
+                <h3 className="text-xl font-bold text-white mb-3 tracking-tight">
+                  {deck}
+                </h3>
 
-                  <p className="text-sm text-gray-400 leading-relaxed mb-4 flex-grow">
-                    {deckDescription}
-                  </p>
+                <p className="text-sm text-gray-400 leading-relaxed mb-6 flex-grow font-light">
+                  {deckDescription}
+                </p>
 
-                  <div className="flex items-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    30 Questions
-                  </div>
+                <div className="flex items-center text-xs font-medium text-gray-500 uppercase tracking-widest bg-black/20 px-3 py-1 rounded-full">
+                  30 Questions
                 </div>
               </button>
             );
