@@ -48,7 +48,7 @@ const DeckDetailsScreen: React.FC<DeckDetailsScreenProps> = ({
 
       {/* Deck Description */}
       <div className="px-6 pt-12 mb-16">
-        <p className="text-gray-600 leading-relaxed text-lg text-center max-w-md mx-auto">
+        <p className="text-gray-600 leading-relaxed text-lg text-center max-w-2xl mx-auto">
           {deckDescription}
         </p>
       </div>

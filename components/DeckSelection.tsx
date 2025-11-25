@@ -124,7 +124,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
                 className="relative p-6 rounded-lg text-left transition-all duration-200 group flex flex-col border-2 bg-white border-gray-200 hover:border-gray-300 hover:shadow-md"
               >
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="p-3 rounded-full flex-shrink-0" style={{ backgroundColor: `${deckColor}15` }}>
+                  <div className="p-3 rounded-full flex-shrink-0" style={{ backgroundColor: `${deckColor}80` }}>
                     {deckIcon}
                   </div>
                   <div className="flex-1 min-w-0">
