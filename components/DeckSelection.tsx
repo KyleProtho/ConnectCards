@@ -20,11 +20,14 @@ const SelfReflectionIcon = (color: string) => <svg xmlns="http://www.w3.org/2000
 const AmusingIcon = (color: string) => <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill={color}><path d="M480-280q66 0 113-47t47-113H320q0 66 47 113t113 47ZM280-600h160q0-33-23.5-56.5T360-680q-33 0-56.5 23.5T280-600Zm240 0h160q0-33-23.5-56.5T600-680q-33 0-56.5 23.5T520-600ZM480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440v-440h720v440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Zm0-80q116 0 198-82t82-198v-360H200v360q0 116 82 198t198 82Zm0-320Z" /></svg>;
 
 interface DeckSelectionProps {
-  onStart: (deck: DeckType) => void;
+  onStart: (deck: DeckType, questionCount: number, includeWildcards: boolean) => void;
 }
 
 const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDeck, setSelectedDeck] = useState<DeckType | null>(null);
+  const [questionCount, setQuestionCount] = useState<number>(12);
+  const [includeWildcards, setIncludeWildcards] = useState<boolean>(false);
 
   // Deck icon mapping
   const getDeckIcon = (deck: DeckType, color: string) => {
@@ -41,7 +44,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
     return iconMap[deck](color);
   };
 
-  // Deck description mapping
+  // Deck description mapping (short descriptions for grid)
   const getDeckDescription = (deck: DeckType): string => {
     const descriptionMap: Record<DeckType, string> = {
       [DeckType.Dating]: 'For sparks, chemistry, and clarity.',
@@ -52,6 +55,21 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
       [DeckType.LongTerm]: 'Because growing together takes curiosity.',
       [DeckType.SelfReflection]: 'Turn inward and discover what you find.',
       [DeckType.Amusing]: 'Lighten the mood and share a laugh.',
+    };
+    return descriptionMap[deck];
+  };
+
+  // Longer deck descriptions for inline details section
+  const getLongDeckDescription = (deck: DeckType): string => {
+    const descriptionMap: Record<DeckType, string> = {
+      [DeckType.Dating]: 'Navigate the early stages of romance with questions designed to reveal compatibility, values, and chemistry. Perfect for first dates or getting to know someone you are interested in.',
+      [DeckType.Strangers]: 'Break the ice and skip the small talk with thoughtful questions that help you connect with new people in meaningful ways. Great for networking events, travel, or any new encounter.',
+      [DeckType.Friends]: 'Deepen your friendships by exploring shared experiences, dreams, and perspectives. These questions help you laugh together while discovering new layers of your connection.',
+      [DeckType.Intimacy]: 'Explore physical and sexual intimacy with questions about desires, boundaries, and affection. Designed to help partners communicate openly about sex, touch, and what makes them feel safe and connected.',
+      [DeckType.Coworkers]: 'Transform workplace relationships by discovering the real people behind professional roles. Perfect for team building, remote teams, or simply getting to know your colleagues better.',
+      [DeckType.LongTerm]: 'Keep your long-term relationship fresh and growing with questions that spark curiosity, alignment, and continued discovery. Because knowing someone deeply is a lifelong journey.',
+      [DeckType.SelfReflection]: 'Explore your own thoughts, values, and aspirations through introspective questions. Use these alone for journaling or with a trusted companion for mutual growth.',
+      [DeckType.Amusing]: 'Bring lightness and laughter to any gathering with playful, creative questions. Perfect for parties, road trips, or whenever you need to lift the mood.',
     };
     return descriptionMap[deck];
   };
@@ -116,12 +134,17 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
             const deckColor = getDeckColor(deck);
             const deckIcon = getDeckIcon(deck, '#000000');
             const deckDescription = getDeckDescription(deck);
+            const isSelected = selectedDeck === deck;
 
             return (
               <button
                 key={deck}
-                onClick={() => onStart(deck)}
-                className="relative p-6 rounded-lg text-left transition-all duration-200 group flex flex-col border-2 bg-white border-gray-200 hover:border-gray-300 hover:shadow-md"
+                onClick={() => setSelectedDeck(deck)}
+                className={`relative p-6 rounded-lg text-left transition-all duration-300 group flex flex-col border-2 ${isSelected
+                  ? 'border-gray-400 shadow-lg'
+                  : 'bg-white border-gray-200 hover:border-gray-300 hover:shadow-md'
+                  }`}
+                style={isSelected ? { backgroundColor: `${deckColor}80` } : {}}
               >
                 <div className="flex items-start gap-4 mb-4">
                   <div className="p-3 rounded-full flex-shrink-0" style={{ backgroundColor: `${deckColor}80` }}>
@@ -142,6 +165,137 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
         </div>
       </div>
 
+      {/* Inline Deck Details Section - appears when a deck is selected */}
+      {selectedDeck && (
+        <div
+          className="max-w-2xl mx-auto w-full mb-12 overflow-hidden animate-slideDown"
+          style={{
+            animation: 'slideDown 0.4s ease-out'
+          }}
+        >
+          {/* Deck Description */}
+          <div className="px-6 py-8 mb-8 bg-gray-50 rounded-lg border border-gray-200">
+            <p className="text-gray-700 leading-relaxed text-base text-center">
+              {getLongDeckDescription(selectedDeck)}
+            </p>
+          </div>
+
+          {/* Number of Questions Section */}
+          <div className="px-6 mb-8">
+            <label className="text-sm text-gray-500 uppercase tracking-wider font-medium mb-6 block">
+              Number of Questions
+            </label>
+
+            {/* Slider */}
+            <div className="mb-3">
+              <div className="flex items-center gap-4">
+                <span className="text-2xl font-medium text-black min-w-[3rem]">
+                  {questionCount}
+                </span>
+                <input
+                  type="range"
+                  min="4"
+                  max="16"
+                  step="1"
+                  value={questionCount}
+                  onChange={(e) => setQuestionCount(Number(e.target.value))}
+                  className="flex-1 h-1 bg-gray-200 rounded-full appearance-none cursor-pointer slider"
+                  style={{
+                    background: `linear-gradient(to right, #000000 0%, #000000 ${((questionCount - 4) / 12) * 100}%, #E5E7EB ${((questionCount - 4) / 12) * 100}%, #E5E7EB 100%)`,
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Tick Labels */}
+            <div className="ml-[3rem] mr-0 mt-3 relative">
+              <div className="flex justify-between">
+                {[4, 8, 12, 16].map((count) => (
+                  <button
+                    key={count}
+                    onClick={() => setQuestionCount(count)}
+                    className={`text-xs transition-colors ${questionCount === count
+                        ? 'text-black font-semibold'
+                        : 'text-gray-400 hover:text-gray-600'
+                      }`}
+                  >
+                    {count}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Wildcard Toggle Section */}
+          <div className="px-6 mb-8">
+            <div className="flex items-center justify-between bg-gray-50 rounded-lg p-6 border border-gray-200">
+              <div className="flex-1">
+                <h3 className="text-black font-medium mb-1">Include wildcards</h3>
+                <p className="text-sm text-gray-600">
+                  Add a few surprising questions to the mix.
+                </p>
+              </div>
+
+              <button
+                onClick={() => setIncludeWildcards(!includeWildcards)}
+                className={`relative w-14 h-8 rounded-full transition-colors duration-300 ${includeWildcards ? 'bg-black' : 'bg-gray-300'
+                  }`}
+              >
+                <div
+                  className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 ${includeWildcards ? 'translate-x-7' : 'translate-x-1'
+                    }`}
+                />
+              </button>
+            </div>
+          </div>
+
+          {/* Start Conversation Button */}
+          <div className="px-6">
+            <button
+              onClick={() => onStart(selectedDeck, questionCount, includeWildcards)}
+              className="w-full py-4 rounded-full font-medium text-base transition-all duration-200 bg-black text-white hover:bg-gray-800 active:scale-[0.98]"
+            >
+              Start Conversation
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Custom slider styles and animations */}
+      <style>{`
+        .slider::-webkit-slider-thumb {
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: black;
+          cursor: pointer;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .slider::-moz-range-thumb {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: black;
+          cursor: pointer;
+          border: none;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+            max-height: 0;
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+            max-height: 1000px;
+          }
+        }
+      `}</style>
 
     </div>
   );
