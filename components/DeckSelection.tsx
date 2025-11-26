@@ -226,7 +226,7 @@ const DeckSelection: React.FC<DeckSelectionProps> = ({ onStart }) => {
           </div>
         )}
 
-        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4`}>
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 relative`}>
           {filteredDecks.map((deck, index) => {
             const deckColor = getDeckColor(deck);
             const deckIcon = getDeckIcon(deck, '#000000');
