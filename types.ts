@@ -8,4 +8,5 @@ export enum DeckType {
   Intimacy = 'Intimacy',
   SelfReflection = 'Self-Reflection',
   Amusing = 'Amusing',
+  Family = 'Family',
 }

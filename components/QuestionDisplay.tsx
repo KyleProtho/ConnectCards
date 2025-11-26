@@ -129,7 +129,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ questions, deckTitle,
   // Deck color mapping
   const getDeckColor = (deck: string): string => {
     const colorMap: Record<string, string> = {
-      'Dating': '#d8b4fe',
+      'Dating': '#fca4d6',
       'Friends': '#86efac',
       'Long-Term Relationship': '#fca5a5',
       'Coworkers': '#fde047',
